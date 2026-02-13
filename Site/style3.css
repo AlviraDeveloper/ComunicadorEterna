@@ -1,0 +1,188 @@
+/* --- BASE GENERAL --- */
+body { 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f7ff; /* Azul pastel muy claro, limpio */
+    color: #333d47; /* Texto azul oscuro */
+    margin: 0; 
+    height: 100vh; /* Ocupa todo el alto de la pantalla */
+    overflow: hidden; 
+    padding: 1.5rem 2rem; /* Margen general con rem para estabilidad */
+    font-size: 16px; /* Base */
+}
+
+/* Contenedor para manejar la altura vertical */
+.contenedor-pagina {
+    height: 97vh; 
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* 1. BOTÓN DE VOLVER (ARRIBA) - Ahora será enorme y visible */
+.btn-atras {
+
+    display: inline-block;
+    padding: 1.5rem 1.5rem;
+    font-size: 1.3rem;
+    text-decoration: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 12px;
+    margin-bottom: 0.2rem;
+    border: 3px solid #0056b3;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+
+}
+
+
+/* 2. ÁREA DE TEXTO PRINCIPAL (OUTPUT) */
+#output {   
+    width: 100%;
+    height: 18vh;
+    font-size: 3.5rem;
+    resize: none;
+    border: 4px solid #0056b3;
+    border-radius: 12px;
+    padding: 0rem;
+    margin-bottom: 0rem;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    flex-shrink: 0;
+}
+
+/* 3. CONTROLES (CHECKBOX Y SLIDER) - SOLUCIÓN DE ALINEACIÓN GARANTIZADA */
+.control-config-contenedor {   
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    gap: 1.5rem;
+    margin: 0.5rem;
+    padding: 1rem 7rem;
+    border: 2px solid #ffc107;
+    border-radius: 12px;
+    background-color: #fff3cd;
+    flex-shrink: 0;
+    min-height: 40px;
+}
+
+.control-foco, .control-velocidad {
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem; /* Letra grande */
+    /* Permitir que el espacio se distribuya equitativamente */
+    flex-basis: 48%; 
+    min-width: 200px; /* Mínimo para que no colapse */
+}
+
+.control-foco label, .control-velocidad label {
+    font-weight: bold;
+    margin-right: 1rem;
+    color: #003d80;
+}
+
+#check-focus-talk {
+    transform: scale(2); /* Hace el checkbox aún más grande */
+    margin-right: 1rem;
+}
+
+#focus-speed-range {
+    flex-grow: 1; /* El slider usa todo el espacio disponible */
+    min-width: 150px; 
+    margin: 0 1rem;
+}
+
+#focus-speed-value {
+    font-weight: bold;
+    color: #dc3545; /* Rojo para el valor de tiempo */
+    font-size: 1.6rem;
+}
+
+/* 4. BOTONES DE ACCIÓN (HABLAR / LIMPIAR) */
+.boton-contenedor {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin: 0.5rem;
+    flex-shrink: 0;
+}
+
+.boton-funcional {
+    padding: 2rem 4rem;
+    font-size: 2rem; 
+    font-weight: bold;
+    border-radius: 15px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    background-color: #28a745; /* Verde para acción principal (HABLAR) */
+    color: white;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+.boton-funcional:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+}
+#boton-limpiar {
+    background-color: #ffc107; /* Amarillo para LIMPIAR */
+    color: #333d47;
+}
+#boton-limpiar:hover {
+    background-color: #e0a800;
+}
+
+
+/* 5. TECLADO VIRTUAL */
+#teclado {
+    /* Utiliza el espacio vertical restante */
+    flex-grow: 1; 
+    display: flex;
+    flex-direction: column;
+    gap: 1.5vh; 
+    min-height: 250px; 
+}
+
+.tecla-row {
+    display: flex;
+    justify-content: center;
+    gap: 1.5vh; 
+    flex: 1; 
+}
+
+.tecla {
+    flex: 1;
+    padding: 2vh 0.5vw;
+    font-size: 2.2rem; /* Tamaño de letra gigante en las teclas */
+    font-weight: bold;
+    border-radius: 10px;
+    border: 3px solid #0056b3;
+    background-color: #fff;
+    color: #0056b3;
+    cursor: pointer;
+    transition: background-color 0.1s, transform 0.1s;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    height: auto; 
+    line-height: 1; 
+}
+
+.tecla:hover {
+    background-color: #e9ecef;
+    transform: translateY(-1px);
+}
+
+/* Tecla de espacio: más ancha y color más oscuro */
+.tecla-espacio {
+    flex: 2; 
+    background-color: #0056b3; 
+    color: white;
+    border-color: #003d80;
+}
+
+/* Teclas funcionales (PITIDO, BORRAR) */
+.tecla-funcional {
+    background-color: #dc3545; /* Rojo para borrar */
+    color: white;
+    border-color: #bd2130;
+    flex: 1.5; 
+    font-size: 2rem;
+}

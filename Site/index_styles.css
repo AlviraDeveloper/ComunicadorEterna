@@ -1,0 +1,377 @@
+/* ------------------------------------- */
+/* --- BASE GENERAL --- */
+/* ------------------------------------- */
+body {
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f7ff; /* Azul pastel muy claro, base limpia */
+    color: #333d47; /* Texto azul oscuro (Navy Blue), elegante */
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.3s; /* Transición general de fondo */
+}
+
+/* Ocultar elementos para SEO/Accesibilidad */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+
+/* Contenedor principal para centrar el contenido */
+main {
+    max-width: 1000px; /* Un poco más ancho para más espacio */
+    margin: 0 auto;
+    padding: 20px 30px 60px 30px; /* Más padding en general */
+}
+
+/* ------------------------------------- */
+/* --- CABECERA Y NAVEGACIÓN --- */
+/* ------------------------------------- */
+
+/* Header general (Contenedor superior) */
+header {
+    background: linear-gradient(135deg, #ffffff, #e6f7ff); /* Degradado suave */
+    padding: 15px 0; 
+    border-bottom: 5px solid #0056b3; /* Línea azul oscuro fuerte */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Contenedor FLEX: LOGO | TÍTULO/NAV */
+.header-content {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+    max-width: 1000px; 
+    margin: 0 auto; 
+    padding: 0 30px; 
+    flex-wrap: wrap; 
+    
+}
+
+.btn-atras,#btn-atras{
+    font-size: xxx-large;
+
+}
+.campoDeTexto,#campoDeTexto {
+    padding: 12px 20px;
+    align-items: center;
+    float: none;
+    min-width: 60%;
+    font-size: xxx-large;
+    border-radius: 20px; 
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+/* 1. LOGO */
+.logo-area {
+    display: flex;
+    align-items: center;
+}
+.logo-area img {
+    max-width: 160px; /* Tamaño profesional para escritorio */
+    height: auto;
+    border-radius: 8px; 
+}
+
+/* 2. NUEVO CONTENEDOR para TÍTULO y NAV (Ocupa el espacio restante) */
+.title-and-nav-area {
+    display: flex;
+    flex-direction: column; /* Apila Título y Nav verticalmente */
+    align-items: center; /* Centra el contenido (Título y Nav) */
+    flex-grow: 1; /* Ocupa el espacio que queda en la cabecera */
+    margin-left: 20px;
+}
+
+/* 2. TÍTULO: El "Encanto" */
+.main-title {
+    color: #007bff; /* Azul vibrante */
+    font-family: 'Arial Black', sans-serif;
+    font-size: 3em; 
+    font-weight: 900;
+    margin: 0 0 10px 0; /* Margen debajo del título, 0 a los lados */
+    text-align: center;
+    text-shadow: 
+        1px 1px 0 #0056b3,  
+        2px 2px 0 #0056b3,
+        3px 3px 5px rgba(0, 0, 0, 0.3); 
+}
+
+/* 3. NAVEGACIÓN (Menú debajo del título, centrado) */
+nav {
+    display: flex; 
+    gap: 12px; 
+    padding: 12px 20px;
+    background-color: #007bff; 
+    border-radius: 20px; 
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); 
+}
+nav a {
+    color: #e6f7ff; 
+    text-decoration: none;
+    font-weight: 700;
+    padding: 8px 18px; 
+    border-radius: 15px;
+    transition: background-color 0.2s, color 0.2s, transform 0.1s, box-shadow 0.2s;
+    font-size: 1em;
+    border: 1px solid transparent;
+}
+nav a:hover {
+    background-color: #ffffff; 
+    color: #0056b3; 
+    transform: translateY(-3px); 
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+    border: 1px solid #0056b3;
+}
+
+/* ------------------------------------- */
+/* --- CONTENIDO PRINCIPAL --- */
+/* ------------------------------------- */
+
+/* Títulos de sección */
+h1,h2 {
+    color: #0056b3;
+    border-bottom: 2px solid #a8c1e4;
+    padding-bottom: 12px;
+    margin-top: 50px;
+    font-size: 2.2em; 
+    font-weight: 700;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05); 
+}
+
+p {
+    margin-bottom: 25px;
+    font-size: 1.15em;
+    color: #495057;
+}
+
+/* Separador horizontal decorativo */
+hr {
+    border: 0;
+    height: 4px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), #007bff, #0056b3, #007bff, rgba(0, 0, 0, 0));
+    margin: 60px 0;
+    border-radius: 2px;
+}
+
+/* ------------------------------------- */
+/* --- BOTONES DE SISTEMAS DISPONIBLES (GRID) --- */
+/* ------------------------------------- */
+#sistemas-botones {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); 
+    gap: 25px;
+    margin-top: 30px;
+}
+
+#sistemas-botones button {
+    padding: 30px;
+    font-size: 1.1em; 
+    border-radius: 15px; 
+    cursor: pointer;
+    border: 1px solid #cceeff; 
+    background-color: #ffffff; 
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); 
+    transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1); 
+    text-align: left;
+    /* Usamos flex para alinear el icono con el texto */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 140px; 
+    position: relative; 
+    overflow: hidden;
+}
+
+/* Estilo para los iconos de los botones: ¡AQUÍ ESTÁ EL CAMBIO DE TAMAÑO! */
+.button-icon {
+    font-size: 2.5em; /* Aumentamos el tamaño de los iconos (emojis) */
+    line-height: 1;
+    margin-right: 15px; /* Separación del texto */
+    display: inline-block; /* Para que el tamaño se aplique bien */
+    transition: transform 0.3s;
+}
+
+/* Contenedor del título y el ícono dentro del botón */
+#sistemas-botones button strong {
+    color: #0056b3; 
+    font-size: 1.3em;
+    font-weight: 800;
+    margin-bottom: 5px;
+    z-index: 3;
+    display: flex; /* Para alinear el ícono con el texto fuerte */
+    align-items: center;
+}
+
+/* Efecto de fondo sutil al hacer hover */
+#sistemas-botones button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 123, 255, 0);
+    transition: background 0.3s;
+    z-index: 1;
+    pointer-events: none;
+}
+#sistemas-botones button:hover::before {
+    background: rgba(0, 123, 255, 0.1); 
+}
+
+#sistemas-botones button:hover {
+    background-color: #007bff; 
+    color: white;
+    transform: translateY(-10px) scale(1.02); 
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); 
+    z-index: 2; 
+}
+#sistemas-botones button:hover .button-icon {
+    transform: scale(1.1); /* Efecto en el icono al hacer hover */
+}
+
+#sistemas-botones button small {
+    display: block;
+    margin-top: 10px;
+    font-size: 0.95em; 
+    color: #6c757d; 
+    font-weight: 400;
+    z-index: 3; 
+}
+#sistemas-botones button:hover small {
+    color: #cceeff; 
+}
+#sistemas-botones button:hover strong {
+    color: #ffffff; 
+}
+
+
+/* ------------------------------------- */
+/* --- RESPONSIVE (Ajuste para móviles) --- */
+/* ------------------------------------- */
+@media (max-width: 992px) {
+    .main-title {
+        font-size: 2.2em;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Ajuste para móviles */
+    
+    .header-content {
+        flex-direction: column; 
+        align-items: center; 
+        padding-bottom: 10px;
+    }
+    
+    /* El logo va solo en la primera línea */
+    .logo-area {
+        order: 1; 
+        width: 100%;
+        justify-content: center; 
+        margin-bottom: 15px; 
+    }
+    .logo-area img {
+        max-width: 150px; 
+    }
+
+    /* El contenedor de TÍTULO y NAV va debajo del logo */
+    .title-and-nav-area {
+        order: 2;
+        width: 100%;
+        margin-left: 0; /* Quitar el margen de escritorio */
+    }
+
+    .main-title {
+        width: 100%;
+        font-size: 2em; 
+        margin: 10px 0 20px 0; 
+    }
+    
+    nav {
+        width: 100%;
+        justify-content: space-around; 
+        padding: 8px 10px;
+        border-radius: 10px;
+    }
+    nav a {
+        font-size: 0.85em;
+        padding: 8px 8px;
+    }
+    
+    main {
+        padding: 15px 15px 40px 15px;
+    }
+    #sistemas-botones {
+        grid-template-columns: 1fr; 
+    }
+}
+
+@media (max-width: 480px) {
+    nav {
+        flex-wrap: wrap; 
+        gap: 5px; 
+    }
+    nav a {
+        flex-grow: 1; 
+        text-align: center;
+    }
+    .button-icon {
+        font-size: 2em; /* Reducimos un poco el icono en móviles muy pequeños */
+        margin-right: 10px;
+    }
+}
+
+.menu-cuadricula {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 columnas */
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        /* Botones de submenú (MÁS ALTOS) */
+        .sub-boton {
+            padding: 40px 15px; /* AUMENTADO: Mucho más altos */
+            font-size: 1.1em;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            background-color: #f0f0f0;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.2s;
+        }
+        .vista.oculto { display: none; }
+
+        /* Botones del menú principal (MÁS ALTOS y con color) */
+        #menu-inicial .sub-boton { 
+            background-color: #007bff; 
+            color: white; 
+            padding: 60px 15px; /* MÁS ALTOS Y VISIBLES para la navegación principal */
+            font-size: 1.4em; 
+        }
+
+        /* ESTILO DEL BOTÓN DE VOLVER (Punto solicitado) */
+        .btn-volver {
+            display: inline-block; /* Se comporta como un botón/bloque */
+            margin-top: 50px; 
+            width: 300px; /* Ancho fijo para ser prominente pero no invasivo */
+            padding: 20px;
+            font-size: 1.1em;
+            font-weight: bold;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            background-color: #fff;
+            cursor: pointer;
+            text-decoration: none; /* Quitamos el subrayado del enlace */
+            color: #333;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>

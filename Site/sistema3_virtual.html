@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🗣️ Eterna Teclado Virtual GIGANTE 🗣️</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🗣️</text></svg>">
+    <style>
+        /* BASE ERGONÓMICA Y MÁXIMA ESCALA */
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            background-color: #e6f7ff; /* Azul muy claro y suave */
+            margin: 0; 
+            padding: 1vh; /* Pequeño padding alrededor para respirar */
+            height: 100vh;
+            box-sizing: border-box;
+            overflow: hidden; /* Evitar scroll no deseado */
+        }
+        
+        /* CONTENEDOR PRINCIPAL: Ocupa el 100% del espacio disponible */
+        .contenedor-principal {
+            width: 100%;
+            max-width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* BOTÓN DE RETROCESO (Ajustado para no estorbar, pero visible) */
+        .btn-atras {
+            position: absolute;
+            top: 1vh;
+            left: 1vh;
+            font-size: 1.5em;
+            padding: 10px 15px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 12px;
+            cursor: pointer;
+            text-decoration: none;
+            line-height: 1;
+            z-index: 10;
+            transition: background-color 0.1s;
+            font-weight: bold;
+        }
+        .btn-atras:hover {
+            background-color: #0056b3;
+        }
+
+        /* ÁREA DE TEXTO (GIGANTE) */
+        #output { 
+            width: 98%; /* Casi 100% del ancho del contenedor */
+            height: 20vh; /* Aumento de la altura para el texto */
+            margin: 1vh 0; 
+            font-size: 8vw; /* Fuente masiva, adaptativa al viewport */
+            resize: none; 
+            border: 4px solid #0056b3;
+            border-radius: 18px;
+            padding: 15px; 
+            box-sizing: border-box;
+            background-color: white;
+            text-align: center;
+            line-height: 1.2;
+        }
+        
+        /* CONTROLES DE CONFIGURACIÓN */
+        .control-config {
+            width: 98%;
+            display: flex;
+            flex-direction: column; 
+            gap: 10px;
+            margin-bottom: 1vh;
+            padding: 10px;
+            background-color: #f0f7ff;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .control-focus-mode, .control-velocidad {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+
+        #check-focus-talk {
+            transform: scale(1.5); 
+            vertical-align: middle;
+        }
+        
+        /* Controles de Velocidad (Slider y Valor) */
+        #focus-speed-range {
+            flex: 1;
+            margin: 0 15px;
+            height: 10px;
+        }
+        #focus-speed-value {
+            font-size: 1.3em;
+            color: #dc3545;
+            min-width: 50px; /* Evita que el texto salte */
+            text-align: right;
+        }
+
+        /* CONTENEDOR DE BOTONES (HABLAR/LIMPIAR) */
+        .boton-contenedor { 
+            display: flex; 
+            gap: 10px;
+            margin-bottom: 1vh; 
+            width: 98%;
+        }
+
+        /* BOTONES DE ACCIÓN (TTS & LIMPIAR) - ¡MUY GRANDES! */
+        .boton-funcional { 
+            flex: 1;
+            padding: 12px 10px; 
+            color: white; 
+            border: none; 
+            border-radius: 12px; 
+            cursor: pointer; 
+            transition: background-color 0.1s, transform 0.1s; 
+            font-size: 1.5em; /* Tamaño de fuente grande */
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            line-height: 1.2;
+        }
+
+        #boton-tts { background-color: #28a745; }
+        #boton-tts:hover { background-color: #1e7e34; transform: translateY(-2px); }
+        
+        #boton-limpiar { background-color: #dc3545; }
+        #boton-limpiar:hover { background-color: #c82333; transform: translateY(-2px); }
+
+        /* TECLADO CONTENEDOR */
+        #teclado {
+            width: 98%; 
+            /* Ocupa todo el espacio vertical restante para maximizar el tamaño de las teclas */
+            flex-grow: 1; 
+            display: flex;
+            flex-direction: column;
+            gap: 1.5vh; /* Espacio entre filas */
+            padding-bottom: 1vh;
+        }
+
+        /* FILAS Y TECLAS */
+        .tecla-row { 
+            display: flex; 
+            width: 100%; 
+            flex: 1; /* Distribuye el espacio vertical equitativamente */
+            gap: 1.5vh; /* Espacio entre teclas */
+        }
+        
+        .tecla { 
+            flex: 1;
+            font-size: 6vw; /* ¡Tamaño de fuente MASIVO! */
+            font-weight: bold;
+            cursor: pointer; 
+            background-color: #ffffff; 
+            border: 3px solid #ced4da; 
+            border-radius: 10px; 
+            height: auto;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.1s, box-shadow 0.1s; 
+        }
+        .tecla:hover { background-color: #e9ecef; }
+
+        /* TECLAS ESPECIALES */
+        .tecla-row:last-child .tecla:nth-child(1) { flex: 5; } /* ESPACIO */
+        .tecla-row:last-child .tecla:nth-child(2) { flex: 2; } /* BORRAR */
+        .tecla-especial { 
+            background-color: #ffc107; 
+            font-weight: bold; 
+            color: #333;
+            border-color: #e0a800; 
+            font-size: 4vw; /* Un poco más pequeño para caber el texto */
+            padding: 0 5px;
+        }
+        .tecla-especial:hover { background-color: #e0a800; }
+
+
+        /* ESTILO VISUAL DE FOCO (Para indicar qué tecla se va a pulsar) */
+        .tecla.focus-active, .boton-funcional.focus-active {
+            box-shadow: 0 0 15px 7px #007bff; /* Sombra azul brillante */
+            border-color: #007bff;
+            transform: scale(1.03); /* Ligero crecimiento para mayor visibilidad */
+            z-index: 5;
+        }
+        
+    </style>
+</head>
+<body>
+
+    <div class="contenedor-principal">
+        <a href="index.html" class="btn-atras" aria-label="Volver al menú principal">⬅️</a>
+
+        <textarea id="output" placeholder="Escribe aquí con el teclado virtual..."></textarea>
+        
+        <div class="control-config">
+            <!-- 1. Checkbox Modo Foco -->
+            <div class="control-focus-mode">
+                <label for="check-focus-talk">Modo Foco por Tiempo:</label>
+                <input type="checkbox" id="check-focus-talk" checked>
+            </div>
+
+            <!-- 2. Slider de Velocidad -->
+            <div class="control-velocidad">
+                <label for="focus-speed-range">Tiempo de Espera:</label>
+                <!-- Rango de 500ms (0.5s) a 5000ms (5s) -->
+                <input type="range" id="focus-speed-range" min="500" max="5000" step="100" value="2000" aria-label="Selector de tiempo de espera">
+                <span id="focus-speed-value">2.0 s</span>
+            </div>
+        </div>
+
+        <div class="boton-contenedor"> 
+            <button id="boton-tts" class="boton-funcional">🔊 HABLAR 🔊</button>
+            <button id="boton-limpiar" class="boton-funcional">🗑️ LIMPIAR 🗑️</button>
+        </div>
+
+        <div id="teclado">
+            <!-- Las filas se llenarán con JS -->
+        </div>
+    </div>
+
+    <script>
+        const output = document.getElementById('output');
+        const botonTTS = document.getElementById('boton-tts');
+        const botonLimpiar = document.getElementById('boton-limpiar');
+        const checkFocusTalk = document.getElementById('check-focus-talk');
+        const rangeSpeed = document.getElementById('focus-speed-range');
+        const speedValueSpan = document.getElementById('focus-speed-value');
+        const tecladoDiv = document.getElementById('teclado');
+
+        // Variables dinámicas para la funcionalidad de Foco por Tiempo
+        let dwellTimer = null;
+        let currentFocusTime = parseInt(rangeSpeed.value); 
+        let currentFocusElement = null;
+        let focusMode = checkFocusTalk.checked; 
+
+        // ---------------------------------------------
+        // DWELL TIME LOGIC
+        // ---------------------------------------------
+
+        function clearDwellTimer() {
+            if (dwellTimer) {
+                clearTimeout(dwellTimer);
+                dwellTimer = null;
+            }
+            if (currentFocusElement) {
+                currentFocusElement.classList.remove('focus-active');
+                currentFocusElement = null;
+            }
+        }
+
+        function startDwellTimer(element, actionFunction) {
+            clearDwellTimer();
+            if (!focusMode) return; 
+
+            currentFocusElement = element;
+            currentFocusElement.classList.add('focus-active');
+
+            // Usamos el valor dinámico del slider (currentFocusTime)
+            dwellTimer = setTimeout(() => {
+                actionFunction();
+                clearDwellTimer();
+            }, currentFocusTime);
+        }
+
+        // ---------------------------------------------
+        // FUNCIONES DE ACCIÓN
+        // ---------------------------------------------
+
+        // 1. Lógica de la entrada (Escribir y Borrar)
+        function manejarEntrada(tecla) {
+            output.focus();
+            const start = output.selectionStart;
+            const end = output.selectionEnd;
+            const currentText = output.value;
+
+            if (tecla === 'ESPACIO') {
+                output.value = currentText.substring(0, start) + ' ' + currentText.substring(end);
+                output.selectionStart = output.selectionEnd = start + 1;
+            } else if (tecla === 'BORRAR') {
+                if (start === end && start > 0) {
+                    output.value = currentText.substring(0, start - 1) + currentText.substring(end);
+                    output.selectionStart = output.selectionEnd = start - 1;
+                } else if (start !== end) {
+                    output.value = currentText.substring(0, start) + currentText.substring(end);
+                    output.selectionStart = output.selectionEnd = start;
+                }
+            } else {
+                output.value = currentText.substring(0, start) + tecla + currentText.substring(end);
+                output.selectionStart = output.selectionEnd = start + 1;
+            }
+        }
+        
+        // 2. Función de Text-to-Speech (TTS)
+        if ('speechSynthesis' in window) {
+            const synth = window.speechSynthesis;
+            let spanishVoice = null;
+            
+            const hablarTexto = () => {
+                synth.cancel();
+                const textoALeer = output.value;
+                if (textoALeer.trim() !== '') {
+                    if (!spanishVoice) {
+                        spanishVoice = synth.getVoices().find(v => v.lang.startsWith('es-'));
+                    }
+                    const voz = new SpeechSynthesisUtterance(textoALeer);
+                    if (spanishVoice) { voz.voice = spanishVoice; } else { voz.lang = 'es-ES'; }
+                    voz.rate = 0.9; // Un poco más lento para mejor comprensión
+                    synth.speak(voz);
+                }
+            };
+            
+            const limpiarTodo = () => {
+                synth.cancel();
+                output.value = '';
+                output.focus();
+            };
+
+            // Asegurar que las voces se carguen de manera asíncrona
+            const loadVoices = () => {
+                spanishVoice = synth.getVoices().find(v => v.lang.startsWith('es-'));
+            };
+            if (synth.onvoiceschanged !== undefined) {
+                synth.onvoiceschanged = loadVoices;
+            } else {
+                setTimeout(loadVoices, 100); 
+            }
+
+            // ---------------------------------------------
+            // DIBUJAR TECLADO Y EVENTOS
+            // ---------------------------------------------
+
+            // Escuchadores de Click (Funcionalidad normal)
+            botonTTS.addEventListener('click', hablarTexto);
+            botonLimpiar.addEventListener('click', limpiarTodo);
+            
+            // Definición de las filas del teclado
+            const filas = [
+                'Q W E R T Y U I O P',
+                'A S D F G H J K L Ñ',
+                'Z X C V B N M , . ?',
+                'ESPACIO BORRAR'
+            ];
+            
+            // Dibuja el teclado virtual y adjunta Dwell Listeners
+            filas.forEach((filaStr, index) => {
+                const filaDiv = document.createElement('div');
+                filaDiv.classList.add('tecla-row');
+
+                const teclas = filaStr.split(' ');
+
+                teclas.forEach(tecla => {
+                    const boton = document.createElement('button');
+                    boton.textContent = tecla;
+                    boton.classList.add('tecla');
+                    if (tecla === 'ESPACIO' || tecla === 'BORRAR') {
+                        boton.classList.add('tecla-especial');
+                    }
+                    
+                    // Acción de la tecla
+                    const teclaAction = () => manejarEntrada(tecla);
+
+                    // Escuchador de Click (Normal)
+                    boton.addEventListener('click', teclaAction);
+                    
+                    // Escuchadores de Dwell (Foco por Tiempo)
+                    boton.addEventListener('mouseenter', () => startDwellTimer(boton, teclaAction));
+                    boton.addEventListener('mouseleave', clearDwellTimer);
+                    
+                    filaDiv.appendChild(boton);
+                });
+                tecladoDiv.appendChild(filaDiv);
+            });
+            
+            // Escuchadores de Dwell para los botones funcionales
+            botonTTS.addEventListener('mouseenter', () => startDwellTimer(botonTTS, hablarTexto));
+            botonTTS.addEventListener('mouseleave', clearDwellTimer);
+            botonLimpiar.addEventListener('mouseenter', () => startDwellTimer(botonLimpiar, limpiarTodo));
+            botonLimpiar.addEventListener('mouseleave', clearDwellTimer);
+            
+            // Si el modo foco se deshabilita, cancelamos cualquier temporizador
+            checkFocusTalk.addEventListener('change', (event) => {
+                focusMode = event.target.checked;
+                clearDwellTimer();
+            });
+
+            // Escuchador para el Slider de Velocidad
+            rangeSpeed.addEventListener('input', (event) => {
+                currentFocusTime = parseInt(event.target.value, 10);
+                // Actualizar el valor mostrado: convertir ms a segundos
+                speedValueSpan.textContent = (currentFocusTime / 1000).toFixed(1) + ' s'; 
+                clearDwellTimer(); // Limpiar para que el nuevo tiempo se aplique en el siguiente mouseenter
+            });
+
+
+        } else {
+            botonTTS.textContent = 'TTS NO SOPORTADO';
+            botonTTS.disabled = true;
+            output.placeholder = "Tu navegador no soporta la función de voz.";
+        }
+
+        // Poner el foco en el área de texto al cargar
+        window.onload = function() {
+            output.focus();
+            // Mostrar el valor inicial del slider
+            speedValueSpan.textContent = (rangeSpeed.value / 1000).toFixed(1) + ' s';
+        }
+    </script>
+</body>
+</html>
