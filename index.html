@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Añadido para responsividad -->
+    <title>Comunicador Eterna</title> <!-- Título correcto en la pestaña -->
+    <!-- ¡ENLACE AL ARCHIVO CSS EXTERNO! -->
+    <link rel="stylesheet" href="index_styles.css"> 
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🗣️</text></svg>">
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            
+            <!-- 1. LOGO a la izquierda -->
+            <div class="logo-area">
+                <a href="index.html">
+                    <!-- TAMAÑO AUMENTADO A 300PX PARA EL LOGO COMPLETO -->
+                    <img src="EternaCreationsLogo.png" alt="Logo de Eterna" style="max-width: 300px;">
+                </a>
+            </div>
+
+            <!-- 2. CONTENEDOR FLEX: TÍTULO Y MENÚ (Ajustado para ocupar el espacio restante) -->
+            <div class="title-and-nav-area">
+                <!-- TÍTULO CENTRAL -->
+                <h1 class="main-title">Comunicador de Eterna</h1>
+                
+                <!-- NAVEGACIÓN (Menú debajo del título) -->
+                <nav>
+                    <a href="index.html">Inicio</a>
+                    <a href="donaciones.html">Donaciones</a>
+                    <a href="informacion.html">Información</a>
+                    <a href="descargar.zip">Descargar</a> 
+                </nav>
+            </div>
+            
+            <!-- El H1 invisible original para SEO se mantiene fuera del flujo principal, aunque no es estrictamente necesario si usamos el título visible. Lo dejo para evitar confusiones con la estructura previa. -->
+            <h1 class="visually-hidden">Comunicador Eterna</h1> 
+        </div>
+    </header>
+
+    <main>
+        <h2>Bienvenidos a Eterna Creations: Comunicador de Eterna tu Voz, sin barreras.</h2>
+        <p>
+            Hemos desarrollado un sistema de "habla" gratuito para usuarios con 
+            dificultades de movilidad. Es un sistema ligero que **no exige grandes 
+            inversiones** para su utilización, con la finalidad de que aquellas 
+            personas con pocos recursos puedan acceder a un sistema de habla 
+            informatizado acomodado lo mejor posible para ellas.
+        </p>
+        <p style="font-weight: bold;">
+            Es ideal para personas con enfermedades neurodegenerativas (como ELA o Esclerosis Múltiple), secuelas de Ictus (ACV), Tetraplejia, Distrofia Muscular o aquellas condiciones que permitan el uso de sistemas de puntero alternativos o teclados físicos (incluyendo algunos casos de Parálisis Cerebral con movilidad residual)
+        </p>
+
+        <hr>
+
+        <h2 style="text-align: center;">SISTEMAS DISPONIBLES</h2>
+
+        <div id="sistemas-botones">
+            
+            <button onclick="window.location.href='sistema1_teclado.html'">
+                <span class="button-icon">⌨️</span> <strong>Versión 1: Escritura Rápida</strong>
+                <br><small>Uso con teclado físico y Enter.</small>
+            </button>
+
+            <button onclick="window.location.href='sistema2_frases.html'">
+                <span class="button-icon">💬</span> <strong>Versión 2: Frases Prediseñadas</strong>
+                <br><small>Uso con ratón/trackball y un solo clic.</small>
+            </button>
+            
+            <button onclick="window.location.href='sistema3_virtual.html'">
+                <span class="button-icon">🖱️</span> <strong>Versión 3: Teclado Virtual</strong>
+                <br><small>Escribe con la ayuda de un puntero (incluye modo Foco/Tiempo).</small>
+            </button>
+            
+            <button onclick="window.location.href='sistema4_completo.html'">
+                <span class="button-icon">♾️</span> <strong>Versión 4: Sistema Completo</strong>
+                <br><small>Incluye todos los modos de entrada en una sola interfaz.</small>
+            </button>
+            
+        </div>
+        
+        <p style="text-align: center; margin-top: 40px; font-size: 0.9em;">
+            ¿Tienes dudas sobre los sistemas? Visita nuestra página de <a href="ayuda.html">Ayuda y Usabilidad</a>.
+        </p>
+
+    </main>
+
+</body>
+</html>

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eterna - Frases Prediseñadas</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💬</text></svg>">
+    <style>
+        /* ------------------------------------- */
+        /* --- ESTILOS BASE Y GENERALES --- */
+        /* ------------------------------------- */
+        body { 
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: #e6f7ff; /* Azul pastel muy claro */
+            color: #333d47; /* Texto azul oscuro */
+            padding: 20px; 
+            text-align: center; 
+            margin: 0;
+        }
+
+        /* ------------------------------------- */
+        /* --- CABECERA Y NAVEGACIÓN --- */
+        /* ------------------------------------- */
+        header {
+            position: relative; /* Para posicionar la flecha de atrás */
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #007bff;
+        }
+
+        header h1 {
+            font-size: 2.2em;
+            color: #0056b3; /* Azul fuerte */
+            margin: 0;
+            padding: 0 60px; /* Espacio para el botón de atrás */
+        }
+        
+        header p {
+            font-size: 1.1em;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        /* Botón de flecha en el header */
+        .btn-atras {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 1.8em;
+            text-decoration: none;
+            color: #333d47;
+            padding: 10px;
+            border-radius: 8px;
+            transition: background-color 0.2s;
+            line-height: 1;
+        }
+        .btn-atras:hover {
+            background-color: #d1d9e0;
+        }
+
+        /* ------------------------------------- */
+        /* --- CONTENEDOR DE VISTAS --- */
+        /* ------------------------------------- */
+        .vista-titulo { 
+            margin: 30px 0 30px; 
+            font-size: 1.8em;
+            font-weight: 700;
+        }
+
+        .menu-cuadricula {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 columnas para submenús */
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .vista.oculto { 
+            display: none; 
+        }
+
+        /* ------------------------------------- */
+        /* --- ESTILOS DE BOTONES (GENERAL) --- */
+        /* ------------------------------------- */
+        .sub-boton { 
+            /* Estilo para todos los botones de frase/submenú */
+            padding: 30px 15px;
+            font-size: 1.1em;
+            font-weight: bold;
+            border: none;
+            border-radius: 12px;
+            background-color: #f0f8ff; /* Blanco-azul muy claro */
+            color: #333d47;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.1s, background-color 0.2s, box-shadow 0.2s;
+        }
+        
+        .sub-boton:hover {
+            background-color: #dceefc;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* ------------------------------------- */
+        /* --- ESTILOS ESPECÍFICOS DEL MENÚ PRINCIPAL --- */
+        /* ------------------------------------- */
+        #menu-inicial .menu-cuadricula { 
+            grid-template-columns: repeat(2, 1fr); /* 2 columnas para el menú principal */
+        }
+        #menu-inicial .sub-boton { 
+            background-color: #007bff; /* Azul primario */
+            color: white; 
+            padding: 50px 15px; /* Más altos y visibles */
+            font-size: 1.4em; 
+        }
+        #menu-inicial .sub-boton:hover {
+            background-color: #0056b3;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+        /* Colores temáticos para títulos de submenús */
+        .vista-sos .vista-titulo, .vista-dolor .vista-titulo { color: #dc3545; } /* Rojo de alarma */
+        .vista-quiero .vista-titulo { color: #007bff; } /* Azul de acción */
+        .vista-necesito .vista-titulo { color: #28a745; } /* Verde de necesidad */
+
+        /* ------------------------------------- */
+        /* --- ESTILO DEL BOTÓN DE VOLVER (CRÍTICO) --- */
+        /* ------------------------------------- */
+        .btn-volver {
+            display: inline-block;
+            margin: 50px auto 20px auto; /* Centrado y con margen superior */
+            width: 300px;
+            max-width: 90%;
+            padding: 20px;
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #333d47;
+            background-color: #ffc107; /* Amarillo para llamar la atención del regreso */
+            border: 3px solid #e0a800;
+            border-radius: 12px;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+            text-decoration: none;
+            transition: background-color 0.2s, transform 0.1s;
+            cursor: pointer;
+        }
+        .btn-volver:hover {
+            background-color: #e0a800;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+        }
+
+
+        /* ------------------------------------- */
+        /* --- AJUSTES MÓVILES --- */
+        /* ------------------------------------- */
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            header h1 { font-size: 1.8em; }
+            .vista-titulo { font-size: 1.5em; }
+            /* En móvil, solo 2 columnas en todos los menús para botones más grandes */
+            .menu-cuadricula {
+                grid-template-columns: repeat(2, 1fr) !important; 
+                gap: 15px;
+            }
+            .sub-boton {
+                padding: 25px 10px;
+                font-size: 1em;
+            }
+            .btn-volver {
+                width: 95%;
+                font-size: 1.2em;
+                padding: 15px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="btn-atras" aria-label="Volver al menú principal">⬅️</a>
+        <h1>💬 Frases Prediseñadas</h1>
+        <p>Selecciona una categoría para ver las frases y tocar una para que se lea.</p>
+    </header>
+
+    <main>
+        
+        <!-- VISTA: Menú Principal de Categorías -->
+        <div id="menu-inicial" class="vista">
+            <h2 style="color: #4CAF50;">¿Qué necesitas comunicar?</h2>
+            
+            <div class="menu-cuadricula">
+                <button class="sub-boton" onclick="mostrarVista('vista-sos')">🚨 AYUDA (SOS)</button>
+                <button class="sub-boton" onclick="mostrarVista('vista-quiero')">🏃 QUIERO</button>
+                <button class="sub-boton" onclick="mostrarVista('vista-necesito')">📦 NECESITO</button>
+                <button class="sub-boton" onclick="mostrarVista('vista-dolor')">🤕 DOLOR</button>
+            </div>
+            
+            <a href="index.html" class="btn-volver">⬅️ Volver al Menú Principal</a>
+        </div>
+
+        
+        <!-- VISTA: SOS / AYUDA -->
+        <div id="vista-sos" class="vista oculto">
+            <h1 class="vista-titulo">🚨 ¡AYUDA, ME SIENTO MAL!</h1>
+            <div class="menu-cuadricula">
+                <button class="sub-boton" data-frase="Ayuda, el cojín o la almohada están mal.">Cojín/Posición</button>
+                <button class="sub-boton" data-frase="Ayuda, necesito que me cambies de posición.">Necesito Moverme</button>
+                <button class="sub-boton" data-frase="Ayuda, tengo mucho frío.">Tengo Frío</button>
+                <button class="sub-boton" data-frase="Ayuda, tengo mucho calor.">Tengo Calor</button>
+                <button class="sub-boton" data-frase="Ayuda, necesito el extractor de saliva.">Saliva (Extractor)</button>
+                <button class="sub-boton" data-frase="Ayuda, necesito el extractor por tos o mocos.">Tos/Mocos</button>
+                <button class="sub-boton" data-frase="Estoy muy incómoda, revísame ahora.">Estoy Incómodo</button>
+                <button class="sub-boton" data-frase="Tengo náuseas.">Náuseas</button>
+                <button class="sub-boton" data-frase="Demasiada luz o ruido, me molesta.">Luz/Ruido</button>
+                <!-- Se podría añadir uno más para un grid de 3x3 -->
+                <button class="sub-boton" data-frase="Ayuda, el botón de llamada no funciona.">Botón de llamada</button> 
+            </div>
+            <a href="javascript:mostrarVista('menu-inicial')" class="btn-volver">⬅️ Volver a Categorías</a>
+        </div>
+        
+        <!-- VISTA: QUIERO -->
+        <div id="vista-quiero" class="vista oculto">
+            <h1 class="vista-titulo">🏃 ¡QUIERO HACER ESTO!</h1>
+            <div class="menu-cuadricula">
+                <button class="sub-boton" data-frase="Quiero du-char-me o que me ayuden con el aseo.">Ducha/Aseo</button>
+                <button class="sub-boton" data-frase="Quiero ir al sofá ahora.">Sofá</button>
+                <button class="sub-boton" data-frase="Quiero ir al balcón o al exterior un rato.">Balcón/Exterior</button>
+                <button class="sub-boton" data-frase="Quiero ver la televisión ahora.">TV</button>
+                <button class="sub-boton" data-frase="Quiero escuchar música.">Música</button>
+                <button class="sub-boton" data-frase="Quiero que me leas algo o leer un libro.">Leer</button>
+                <button class="sub-boton" data-frase="Quiero pañuelos por favor.">Pañuelos</button>
+                <button class="sub-boton" data-frase="Quiero que me ayudes a escribir algo.">Escribir</button>
+                <button class="sub-boton" data-frase="Quiero recibir una visita o hacer una llamada.">Visita/Llamada</button>
+                <button class="sub-boton" data-frase="Quiero que me pongas las gafas o me las quites.">Gafas</button>
+            </div>
+            <a href="javascript:mostrarVista('menu-inicial')" class="btn-volver">⬅️ Volver a Categorías</a>
+        </div>
+
+        <!-- VISTA: NECESITO -->
+        <div id="vista-necesito" class="vista oculto">
+            <h1 class="vista-titulo">📦 ¡NECESITO ALGO!</h1>
+            <div class="menu-cuadricula">
+                <button class="sub-boton" data-frase="Necesito beber algo, por favor.">Bebida</button>
+                <button class="sub-boton" data-frase="Necesito comer algo ahora.">Comer</button>
+                <button class="sub-boton" data-frase="Necesito un cambio de pañal.">Pañal</button>
+                <button class="sub-boton" data-frase="Necesito mis medicinas o pastillas.">Medicinas</button>
+                <button class="sub-boton" data-frase="Necesito cambiar mi ropa o sábanas, están sucias">Limpieza (Ropa)</button>
+                <button class="sub-boton" data-frase="Necesito abrir o cerrar la ventana.">Ventana/Aire</button>
+                <button class="sub-boton" data-frase="Se me ha caído algo al suelo.">Se ha caído</button>
+                <button class="sub-boton" data-frase="Necesito mi teléfono.">Teléfono</button>
+                <button class="sub-boton" data-frase="Necesito que me des un masaje.">Masaje</button>
+                <button class="sub-boton" data-frase="Necesito que me ayudes a cargar la tablet o el móvil.">Cargar Dispositivo</button>
+            </div>
+            <a href="javascript:mostrarVista('menu-inicial')" class="btn-volver">⬅️ Volver a Categorías</a>
+        </div>
+
+        <!-- VISTA: DOLOR -->
+        <div id="vista-dolor" class="vista oculto">
+            <h1 class="vista-titulo">🤕 ¡ME DUELE AQUÍ!</h1>
+            <div class="menu-cuadricula">
+                <button class="sub-boton" data-frase="Me duele mucho la cabeza.">Cabeza</button>
+                <button class="sub-boton" data-frase="Me duele mucho el cuello.">Cuello</button>
+                <button class="sub-boton" data-frase="Me duele mucho la espalda.">Espalda</button>
+                <button class="sub-boton" data-frase="Me duele el culo o la zona del pañal.">Culo</button>
+                <button class="sub-boton" data-frase="Me duele la pierna derecha.">Pierna Derecha</button>
+                <button class="sub-boton" data-frase="Me duele la pierna izquierda.">Pierna Izquierda</button>
+                <button class="sub-boton" data-frase="Me duele el brazo derecho.">Brazo Derecho</button>
+                <button class="sub-boton" data-frase="Me duele el brazo izquierdo.">Brazo Izquierdo</button>
+                <button class="sub-boton" data-frase="Me duele mucho la barriga o el estómago.">Barriga</button>
+                <button class="sub-boton" data-frase="Me duele en general, no sé dónde.">Dolor General</button>
+            </div>
+            <a href="javascript:mostrarVista('menu-inicial')" class="btn-volver">⬅️ Volver a Categorías</a>
+        </div>
+
+    </main>
+
+    <script>
+        // 1. Función para la voz (TTS) - Solución para evitar cortes como el "nal"
+        function hablarFrase(frase) {
+            window.speechSynthesis.cancel(); // 📢 Cancelamos cualquier voz anterior
+
+            if (frase && frase.trim() !== "") { 
+                const utterance = new SpeechSynthesisUtterance(frase);
+                utterance.lang = 'es-ES'; 
+                // Opcional: Ajustar la velocidad si es necesario, pero lo dejamos por defecto para claridad.
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        // 2. Evento para cada sub-botón de frase
+        document.querySelectorAll('.sub-boton').forEach(button => {
+            button.addEventListener('click', function() {
+                const frase = this.getAttribute('data-frase');
+                if (frase) { // Solo si tiene atributo 'data-frase'
+                    hablarFrase(frase);
+                }
+            });
+        });
+
+        // 3. Función para mostrar/ocultar las vistas
+        function mostrarVista(vistaId) {
+            // Ocultar todas las vistas
+            document.querySelectorAll('.vista').forEach(vista => {
+                vista.classList.add('oculto');
+            });
+            // Mostrar la vista solicitada
+            const vistaAMostrar = document.getElementById(vistaId);
+            if (vistaAMostrar) {
+                 vistaAMostrar.classList.remove('oculto');
+            }
+           
+        }
+
+        // Al cargar la página: Mostramos SOLO el menú inicial
+        window.onload = function() {
+            mostrarVista('menu-inicial'); 
+        };
+    </script>
+</body>
+</html>
