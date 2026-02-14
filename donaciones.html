@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Añadido para responsividad -->
+    <title>Comunicador Eterna</title> <!-- Título correcto en la pestaña -->
+    <!-- ¡ENLACE AL ARCHIVO CSS EXTERNO! -->
+    <link rel="stylesheet" href="index_styles.css"> 
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🗣️</text></svg>">
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            
+            <!-- 1. LOGO a la izquierda -->
+            <div class="logo-area">
+                <a href="index.html">
+                    <!-- TAMAÑO AUMENTADO A 300PX PARA EL LOGO COMPLETO -->
+                    <img src="EternaCreationsLogo.png" alt="Logo de Eterna" style="max-width: 300px;">
+                </a>
+            </div>
+
+            <!-- 2. CONTENEDOR FLEX: TÍTULO Y MENÚ (Ajustado para ocupar el espacio restante) -->
+            <div class="title-and-nav-area">
+                <!-- TÍTULO CENTRAL -->
+                <h1 class="main-title">Comunicador de Eterna</h1>
+                
+                <!-- NAVEGACIÓN (Menú debajo del título) -->
+                <nav>
+                    <a href="index.html">Inicio</a>
+                    <a href="donaciones.html">Donaciones</a>
+                    <a href="informacion.html">Información</a>
+                    <a href="descargar.html">Descargar</a> 
+                </nav>
+            </div>
+            
+            <!-- El H1 invisible original para SEO se mantiene fuera del flujo principal, aunque no es estrictamente necesario si usamos el título visible. Lo dejo para evitar confusiones con la estructura previa. -->
+            <h1 class="visually-hidden">Comunicador Eterna</h1> 
+        </div>
+    </header>
+
+    <section id="descargas-seccion" style="text-align: center; padding: 40px 20px;">
+    <h2 style="color: #007bff; margin-bottom: 20px;">Donanciones</h2>
+    <p style="max-width: 600px; margin: 0 auto 30px auto; color: #495057;">
+        Existen muchas fundaciones donde realizar donaciones
+    </p>
+
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 15px;">
+        
+        <a href="https://fundaciomiquelvalls.org/es/dona/" style="text-decoration: none; width: 100%; max-width: 350px;">
+           
+            <button class="sub-boton" style="background-color: #007bff; color: white; width: 100%; padding: 25px 15px; font-size: 1.2em;">
+                 <img src="https://fundaciomiquelvalls.org/wp-content/uploads/2022/03/FCELA_LOGO_2021_RGB_blanc-H-300x180.png">                
+            </button>
+        </a>
+
+        <a href="https://www.fundela.es/colabora/donar/" target="_blank" style="text-decoration: none; width: 100%; max-width: 350px;">
+            <button class="sub-boton" style="background-color: #28a745; color: white; width: 100%; padding: 25px 15px; font-size: 1.2em;">
+                <img src="https://www.fundela.es/iOApps/F048C26A-4796-43E0-AA1D-EAB0B7D08F3D/Themes/0ACC4C5B-7B76-4CBD-A4F4-793004261D4D/img/logo-fundela.png" style="text-decoration: none; width: 100%; max-width: 350px;">
+            </button>
+        </a>
+
+        <a href="index.html" style="text-decoration: none; margin-top: 20px;">
+            <button class="sub-boton" style="padding: 15px 30px; font-size: 1em; background-color: #f0f0f0; color: #333;">
+                ⬅ Volver al Inicio
+            </button>
+        </a>
+    </div>
+
+    <p style="margin-top: 40px; font-size: 0.85em; color: #888; font-style: italic;">
+        * No requiere instalación: solo descarga, descomprime y abre index.html.
+    </p>
+</section>
+</body>
+</html>
