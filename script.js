@@ -1,193 +1,149 @@
 document.addEventListener('DOMContentLoaded', () => {
-
-    // 1. RECOGIDA DE REFERENCIAS CRÍTICAS
-    // VISTA 1: Teclado principal
+    // 1. REFERENCIAS
     const outputPrincipal = document.getElementById('output');
-    const botonTTSPrincipal = document.getElementById('boton-tts');
-    const botonLimpiarPrincipal = document.getElementById('boton-limpiar');
+    const botonTTS = document.getElementById('boton-tts');
+    const botonLimpiar = document.getElementById('boton-limpiar');
     const tecladoDiv = document.getElementById('teclado');
-
-    // Elementos de navegación
-    const menuBotones = document.querySelectorAll('.menu-boton');
     const vistas = document.querySelectorAll('.vista');
+    const menuBotones = document.querySelectorAll('.menu-boton');
 
-    // Variable para saber qué área de texto está activa
-    let outputActivo = outputPrincipal;
+    let currentFocusTime = 2000; 
+    let keyDwellTimer = null;
 
-    // --- 1. CONFIGURACIÓN INICIAL DEL TECLADO ---
-    const tecladoLayout = [
-        'Q W E R T Y U I O P',
-        'A S D F G H J K L Ñ',
-        'Z X C V B N M , . ?',
-        'PITIDO ESPACIO BORRAR'
-    ];
-
-    function generarTeclado() {
-        tecladoLayout.forEach(filaStr => {
-            const rowDiv = document.createElement('div');
-            rowDiv.classList.add('tecla-row');
-            
-            const teclas = filaStr.split(' ');
-            teclas.forEach(tecla => {
-                const boton = document.createElement('button');
-                boton.textContent = tecla;
-                boton.classList.add('tecla');
-                
-                if (tecla === 'ESPACIO' || tecla === 'BORRAR' || tecla === 'PITIDO') {
-                    boton.classList.add('tecla-especial');
-                }
-                
-                if (tecla === 'PITIDO') {
-                    boton.style.flex = '0.1';
-                } else if (tecla === 'ESPACIO') {
-                    boton.style.flex = '6';
-                } else if (tecla === 'BORRAR') {
-                    boton.style.flex = '1.5';
-                }
-                
-                boton.addEventListener('click', () => manejarEntrada(tecla));
-                rowDiv.appendChild(boton);
-            });
-            tecladoDiv.appendChild(rowDiv);
-        });
+    // --- MOTOR DE TIEMPO (DWELL) ---
+    function startDwellTimer(elemento, accion) {
+        elemento.classList.add('tecla-hovering');
+        keyDwellTimer = setTimeout(() => {
+            accion();
+            elemento.classList.remove('tecla-hovering');
+        }, currentFocusTime);
     }
 
-    // --- 2. LÓGICA DE ESCRITURA ---
-    function manejarEntrada(tecla) {
-        // CRÍTICO: Solo se debe escribir si la vista activa es la del teclado.
-        if (outputActivo !== outputPrincipal) return;
-
-        outputActivo.focus(); 
-        
-        if (tecla === 'ESPACIO') {
-            outputActivo.value += ' ';
-        } else if (tecla === 'BORRAR') {
-            outputActivo.value = outputActivo.value.slice(0, -1);
-        } else if (tecla === 'PITIDO') {
-            tocarAlarma();
-        } else {
-            outputActivo.value += tecla;
-        }
+    function clearDwellTimer(elemento) {
+        if (keyDwellTimer) { clearTimeout(keyDwellTimer); keyDwellTimer = null; }
+        if (elemento) elemento.classList.remove('tecla-hovering');
     }
 
-    // --- LÓGICA DE ALARMA (código abreviado por espacio) ---
-    let alarmaIntervalo;
-    function tocarAlarma() {
-        const duracionTotal = 5000;
-        const intervaloTono = 500;
+    // --- 🚨 ALARMA SOS Y SONIDO ---
+    function tocarPitido() {
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        let tiempoPasado = 0;
-        const emitirPitido = () => {
-            const oscillator = audioCtx.createOscillator();
-            const gainNode = audioCtx.createGain();
-            oscillator.type = 'square';
-            oscillator.frequency.setValueAtTime(1000, audioCtx.currentTime);
-            gainNode.gain.setValueAtTime(0.5, audioCtx.currentTime);
-            oscillator.connect(gainNode);
-            gainNode.connect(audioCtx.destination);
-            oscillator.start();
-            oscillator.stop(audioCtx.currentTime + 0.15);
-            tiempoPasado += intervaloTono;
-        };
-        clearInterval(alarmaIntervalo);
-        emitirPitido();
-        alarmaIntervalo = setInterval(() => {
-            if (tiempoPasado < duracionTotal) {
-                emitirPitido();
-            } else {
-                clearInterval(alarmaIntervalo);
-            }
-        }, intervaloTono);
-    }
-
-    // --- 3. LÓGICA DE FUNCIONES SUPERIORES (TTS & Limpiar) ---
-    
-    function limpiarTexto() {
-        outputActivo.value = '';
-        outputActivo.focus();
-    }
-    
-    function hablarTexto(textoDirecto) {
-        const texto = textoDirecto || outputActivo.value;
-        if (texto.trim() === '') return;
-        const utterance = new SpeechSynthesisUtterance(texto);
-        speechSynthesis.speak(utterance);
-    }
-    
-    // Asignar listeners a los botones principales
-    botonLimpiarPrincipal.addEventListener('click', limpiarTexto);
-    botonTTSPrincipal.addEventListener('click', () => hablarTexto());
-
-
-    // --- 4. LÓGICA DE VISTAS Y NAVEGACIÓN ---
-
-    function cambiarVista(vistaId) {
-        vistas.forEach(vista => {
-            vista.classList.add('oculto');
-        });
-        
-        const vistaActiva = document.getElementById(vistaId);
-        if (vistaActiva) {
-            vistaActiva.classList.remove('oculto');
-            // CRÍTICO: Forzamos el outputActivo
-            if (vistaId === 'vista-teclado') {
-                outputActivo = outputPrincipal;
-            } else {
-                // Si cambiamos a cualquier submenú (SOS, QUIERO, etc.),
-                // el output activo se considera el principal para que 
-                // las frases rápidas puedan usar TTS si se desea, aunque
-                // para SOS no se use el input. Si cambiamos a otra vista
-                // que necesite input (como QUIERO), lo estableceremos más tarde.
-                outputActivo = outputPrincipal;
-            }
-        }
-        outputActivo.focus();
-    }
-
-    // Manejador de clic para los botones de menú de la izquierda
-    menuBotones.forEach(boton => {
-        boton.addEventListener('click', () => {
-            const vistaBase = boton.getAttribute('data-vista');
-            const vistaId = `vista-${vistaBase}`;
-            cambiarVista(vistaId);
-        });
-    });
-
-    // Lógica para que los nuevos botones de submenú HABLE y regrese
-    const subBotones = document.querySelectorAll('.sub-boton');
-
-    subBotones.forEach(boton => {
-        boton.addEventListener('click', () => {
-            const frase = boton.getAttribute('data-frase');
-            
-            // 1. Opcional: Escribir la frase en el input principal para que quede registro
-            outputPrincipal.value = frase; 
-            
-            // 2. Hablar la frase al instante
-            if ('speechSynthesis' in window) {
-                hablarTexto(frase); 
-            }
-
-            // 3. Regresar a la vista principal (Teclado) después de 1.5 segundos
+        for (let i = 0; i < 5; i++) {
             setTimeout(() => {
-                cambiarVista('vista-teclado'); 
-                
-                // CRÍTICO: Esperamos un poco más para asegurar que la vista esté estable, y limpiamos el output
-                setTimeout(() => {
-                    outputPrincipal.value = ''; // Limpia el texto del teclado principal
-                    outputPrincipal.focus();   // Pone el cursor listo para escribir
-                }, 50); // 0.05 segundos después de que la vista del teclado haya vuelto
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.frequency.setValueAtTime(880, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                osc.connect(gain); gain.connect(audioCtx.destination);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.1);
+            }, i * 150);
+        }
+    }
 
-            }, 1500);
+    // --- 🗣️ FUNCIÓN HABLAR (REFORZADA) ---
+    function hablar(texto) {
+        if ('speechSynthesis' in window && texto.trim() !== "") {
+            window.speechSynthesis.cancel();
+            const u = new SpeechSynthesisUtterance(texto);
+            u.lang = 'es-ES';
+            window.speechSynthesis.speak(u);
+        }
+    }
+
+    // --- LÓGICA SELECTOR VELOCIDAD [-] [+] ---
+    const velMenos = document.getElementById('vel-menos');
+    const velMas = document.getElementById('vel-mas');
+    const velValor = document.getElementById('vel-valor');
+    const velocidades = [500, 1000, 2000, 3000];
+    let indiceVel = 2;
+
+    function actualizarVelocidad() {
+        currentFocusTime = velocidades[indiceVel];
+        velValor.textContent = (currentFocusTime / 1000).toFixed(1) + 's';
+        tocarPitido();
+    }
+
+    if(velMenos && velMas) {
+        velMenos.onclick = () => { if(indiceVel > 0) { indiceVel--; actualizarVelocidad(); }};
+        velMas.onclick = () => { if(indiceVel < velocidades.length -1) { indiceVel++; actualizarVelocidad(); }};
+        [velMenos, velMas].forEach(btn => {
+            btn.onmouseenter = () => startDwellTimer(btn, () => btn.click());
+            btn.onmouseleave = () => clearDwellTimer(btn);
         });
+    }
+
+    // --- BOTONES PRINCIPALES (HABLAR Y LIMPIAR) ---
+    botonTTS.onclick = () => hablar(outputPrincipal.value);
+    botonTTS.onmouseenter = () => startDwellTimer(botonTTS, () => hablar(outputPrincipal.value));
+    botonTTS.onmouseleave = () => clearDwellTimer(botonTTS);
+
+    botonLimpiar.onclick = () => { outputPrincipal.value = ''; outputPrincipal.focus(); };
+    botonLimpiar.onmouseenter = () => startDwellTimer(botonLimpiar, () => { outputPrincipal.value = ''; });
+    botonLimpiar.onmouseleave = () => clearDwellTimer(botonLimpiar);
+
+    // --- NAVEGACIÓN ---
+    function cambiarVista(id) {
+        vistas.forEach(v => { v.classList.add('oculto'); v.classList.remove('activa'); });
+        const destino = document.getElementById(`vista-${id}`);
+        if(destino) { destino.classList.remove('oculto'); destino.classList.add('activa'); }
+    }
+
+    menuBotones.forEach(btn => {
+        const destino = btn.getAttribute('data-vista');
+        btn.onmouseenter = () => startDwellTimer(btn, () => cambiarVista(destino));
+        btn.onmouseleave = () => clearDwellTimer(btn);
+        btn.onclick = () => cambiarVista(destino);
     });
 
-    // --- INICIO ---
-    if (!('speechSynthesis' in window)) {
-        botonTTSPrincipal.textContent = 'TTS NO SOPORTADO';
-        botonTTSPrincipal.disabled = true;
+    // --- TECLADO ---
+    const layout = ['Q W E R T Y U I O P', 'A S D F G H J K L Ñ', 'Z X C V B N M , . ?', 'PITIDO ESPACIO BORRAR'];
+    function generarTeclado() {
+        tecladoDiv.innerHTML = '';
+        layout.forEach(fila => {
+            const div = document.createElement('div');
+            div.className = 'tecla-row';
+            fila.split(' ').forEach(t => {
+                const b = document.createElement('button');
+                b.textContent = t; b.className = 'tecla';
+                const acc = () => { 
+                     if(t === 'ESPACIO') {
+                        outputPrincipal.value += ' '; 
+                        // --- PITIDO DE CONFIRMACIÓN PARA ESPACIO ---
+                        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                        const osc = audioCtx.createOscillator();
+                        const gain = audioCtx.createGain();
+                        osc.frequency.setValueAtTime(660, audioCtx.currentTime); // Un tono distinto, más suave
+                        gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+                        osc.connect(gain); gain.connect(audioCtx.destination);
+                        osc.start(); osc.stop(audioCtx.currentTime + 0.05); // Muy cortito: 0.05s
+                    } else if(t === 'BORRAR') {
+                        outputPrincipal.value = outputPrincipal.value.slice(0, -1); 
+                    } else if(t === 'PITIDO') {
+                        tocarPitido(); // Tu ráfaga SOS de siempre
+                    } else {
+                        outputPrincipal.value += t; 
+                    }
+                };
+                b.onclick = acc;
+                b.onmouseenter = () => startDwellTimer(b, acc);
+                b.onmouseleave = () => clearDwellTimer(b);
+                div.appendChild(b);
+            });
+            tecladoDiv.appendChild(div);
+        });
     }
+
+    // --- SUB-BOTONES (FRASES) ---
+    document.querySelectorAll('.sub-boton').forEach(btn => {
+        const frase = btn.getAttribute('data-frase');
+        const acc = () => {
+            hablar(frase);
+            setTimeout(() => { cambiarVista('teclado'); outputPrincipal.value = ''; }, 2000);
+        };
+        btn.onclick = acc;
+        btn.onmouseenter = () => startDwellTimer(btn, acc);
+        btn.onmouseleave = () => clearDwellTimer(btn);
+    });
 
     generarTeclado();
-    cambiarVista('vista-teclado'); // Asegura que se inicia en el teclado
+    cambiarVista('teclado');
 });

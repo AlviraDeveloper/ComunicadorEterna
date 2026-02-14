@@ -15,6 +15,14 @@
             <button class="menu-boton" data-vista="quiero">🏃 QUIERO</button>
             <button class="menu-boton" data-vista="necesito">📦 NECESITO</button>
             <button class="menu-boton" data-vista="dolor">🤕 ME DUELE</button>
+            <div id="selector-velocidad" style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-top: 20px; background: rgba(0,0,0,0.15); padding: 10px; border-radius: 12px; border: 2px solid #0056b3;">
+                <button id="vel-menos" class="tecla" style="width: 60px; height: 60px; cursor: pointer; background: #fff; color: #0056b3; font-weight: bold; font-size: 2rem;">-</button>
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                <span style="font-size: 0.8rem; color: #0056b3; font-weight: bold;">ESPERA</span>
+                <span id="vel-valor" style="font-weight: bold; font-size: 1.5rem; color: #0056b3; min-width: 70px; text-align: center;">2.0s</span>
+            </div>
+            <button id="vel-mas" class="tecla" style="width: 60px; height: 60px; cursor: pointer; background: #fff; color: #0056b3; font-weight: bold; font-size: 2rem;">+</button>
+        </div>
         </div>
 
         <div id="content-columna">
@@ -99,7 +107,6 @@
     </div>
     
     <script src="script.js"></script> 
-    
+   
 </body>
-
 </html>
