@@ -374,4 +374,47 @@ hr {
             color: #333;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
+
+        /*pagina informacion*/
+        .instrucciones-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.card-instruccion {
+    background: #fff;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    border: 2px solid #e6f7ff;
+    transition: transform 0.3s;
+    text-align: center;
+}
+
+.card-instruccion:hover {
+    transform: translateY(-5px);
+    border-color: #007bff;
+}
+
+.card-instruccion img {
+    width: 100%; /* Para que todas tengan el mismo ancho relativo */
+    height: 180px; /* Altura fija para uniformidad */
+    object-fit: contain; /* Para que no se deformen */
+    margin-bottom: 15px;
+    border-radius: 10px;
+}
+
+.card-instruccion strong {
+    display: block;
+    color: #0056b3;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.card-instruccion small {
+    color: #495057;
+    font-size: 0.95em;
+    line-height: 1.4;
+}
     </style>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Añadido para responsividad -->
+    <title>Comunicador Eterna</title> <!-- Título correcto en la pestaña -->
+    <!-- ¡ENLACE AL ARCHIVO CSS EXTERNO! -->
+    <link rel="stylesheet" href="index_styles.css"> 
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🗣️</text></svg>">
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            
+            <!-- 1. LOGO a la izquierda -->
+            <div class="logo-area">
+                <a href="index.html">
+                    <!-- TAMAÑO AUMENTADO A 300PX PARA EL LOGO COMPLETO -->
+                    <img src="EternaCreationsLogo.png" alt="Logo de Eterna" style="max-width: 300px;">
+                </a>
+            </div>
+
+            <!-- 2. CONTENEDOR FLEX: TÍTULO Y MENÚ (Ajustado para ocupar el espacio restante) -->
+            <div class="title-and-nav-area">
+                <!-- TÍTULO CENTRAL -->
+                <h1 class="main-title">Comunicador de Eterna</h1>
+                
+                <!-- NAVEGACIÓN (Menú debajo del título) -->
+                <nav>
+                    <a href="index.html">Inicio</a>
+                    <a href="donaciones.html">Donaciones</a>
+                    <a href="informacion.html">Información</a>
+                    <a href="descargar.zip">Descargar</a> 
+                </nav>
+            </div>
+            
+            <!-- El H1 invisible original para SEO se mantiene fuera del flujo principal, aunque no es estrictamente necesario si usamos el título visible. Lo dejo para evitar confusiones con la estructura previa. -->
+            <h1 class="visually-hidden">Comunicador Eterna</h1> 
+        </div>
+    </header>
+<main>
+    <section class="instrucciones-header">
+        <h2>Comunicador Eterna: Tu voz, sin barreras ni costes excesivos.</h2>
+        <p>
+            Este sistema ha sido diseñado específicamente para operar en <strong>pantallas de gran formato (monitores, portátiles o tablets de más de 10")</strong>. 
+            Priorizamos la legibilidad y la precisión del clic sobre el diseño responsive de móvil, ya que buscamos una experiencia de usuario fluida y sin fatiga visual.
+            <br><br>
+            <strong>Ventaja Clave:</strong> No requiere instalación. Funciona directamente en tu navegador (Chrome, Edge, Firefox), transformando cualquier ordenador antiguo con Windows o Linux en una potente herramienta de comunicación que no consume recursos del sistema.
+        </p>
+    </section>
+
+    <div id="sistemas-botones" class="instrucciones-grid">
+        <div class="card-instruccion">
+            <img src="teclado.png" alt="Mini Teclado Touchpad">
+            <strong>Mini Teclado con Touchpad</strong>
+            <small>Ideal para usar con una sola mano. Permite desplazar el cursor y hacer clic con ligeros movimientos del índice. Una solución compacta y ergonómica.</small>
+        </div>
+
+        <div class="card-instruccion">
+            <img src="raton.png" alt="Ratón de Bola">
+            <strong>Ratón de Bola (Trackball)</strong>
+            <small>Perfecto para quienes tienen movilidad reducida en el brazo. Solo requiere el movimiento del pulgar para navegar por toda la pantalla.</small>
+        </div>
+
+        <div class="card-instruccion">
+            <img src="tabletaDibujo.png" alt="Tableta Digitalizadora">
+            <strong>Tableta de Dibujo</strong>
+            <small>Las tabletas pequeñas reducen el rango de movimiento necesario. Si puedes sujetar un lápiz, esta es la forma más precisa de controlar el ratón.</small>
+        </div>
+
+        <div class="card-instruccion">
+            <img src="eyetrack.png" alt="Eye-Tracking">
+            <strong>Eye-Tracking (Seguimiento de Iris)</strong>
+            <small>La solución definitiva para movilidad nula. Permite controlar el puntero con la mirada, devolviendo la autonomía total al usuario.</small>
+        </div>
+    </div>
+
+    <section class="filosofia-eterna">
+        <h2>¿Por qué elegir el Teclado Eterna?</h2>
+        <p>
+            Mientras otros sistemas requieren hardware propietario de 3.000€, <strong>Eterna</strong> nace para funcionar con lo que ya tienes en casa. 
+            Al ser una aplicación web liviana, evitamos el "lag" en equipos antiguos, garantizando que el usuario sea escuchado sin interrupciones técnicas.
+        </p>
+        <div class="links-ayuda">
+            <h4>Otras Herramientas Gratuitas Recomendadas:</h4>
+            <ul>
+                <li><strong>Look to Speak (Google):</strong> Aplicación móvil de seguimiento ocular excelente para frases cortas. <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.accessibility.reveal" target="_blank">[Enlace App]</a></li>
+                <li><strong>OTTAA Project:</strong> Comunicación aumentativa basada en pictogramas.</li>
+                <li><strong>Predictable:</strong> Motor de predicción de texto para movilidad parcial.</li>
+            </ul>
+        </div>
+    </section>
+</main>
+</body>
+</html>
