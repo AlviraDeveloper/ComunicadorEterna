@@ -38,7 +38,8 @@ main {
 /* Header general (Contenedor superior) */
 header {
     background: linear-gradient(135deg, #ffffff, #e6f7ff); /* Degradado suave */
-    padding: 15px 0; 
+    padding-top: 10px !important; 
+    padding-bottom: 10px !important;
     border-bottom: 5px solid #0056b3; /* Línea azul oscuro fuerte */
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     text-align: center;
@@ -75,9 +76,7 @@ header {
     align-items: center;
 }
 .logo-area img {
-    max-width: 160px; /* Tamaño profesional para escritorio */
-    height: auto;
-    border-radius: 8px; 
+    max-width: 250px !important; /* Un pelín más pequeño para ganar espacio vertical */
 }
 
 /* 2. NUEVO CONTENEDOR para TÍTULO y NAV (Ocupa el espacio restante) */
@@ -139,10 +138,21 @@ h1,h2 {
     color: #0056b3;
     border-bottom: 2px solid #a8c1e4;
     padding-bottom: 12px;
-    margin-top: 50px;
-    font-size: 2.2em; 
+    margin-top: 0.5px;
+    font-size: 1.7em; 
     font-weight: 700;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05); 
+    
+}
+h3 {
+    color: #0056b3;
+    border-bottom: 2px solid #a8c1e4;
+    display: flex;          /* ¡Zaska! Activamos el motor flex */
+    justify-content: center; /* Centrado horizontal */
+    align-items: center;    /* Centrado vertical */
+    text-align: center;     /* Por si acaso el texto tiene varias líneas */
+    width: 100%;            /* Para que ocupe todo el ancho y sepa dónde está el centro */
+    margin: 20px auto;      /* Le damos aire por arriba y abajo */
+    gap: 10px;              /* Por si le pones algún icono al lado */
 }
 
 p {

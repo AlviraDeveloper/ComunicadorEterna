@@ -1,149 +1,119 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. REFERENCIAS
-    const outputPrincipal = document.getElementById('output');
-    const botonTTS = document.getElementById('boton-tts');
-    const botonLimpiar = document.getElementById('boton-limpiar');
+    const output = document.getElementById('output');
+    const checkFocusTalk = document.getElementById('check-focus-talk');
+    const speedValueSpan = document.getElementById('focus-speed-value');
     const tecladoDiv = document.getElementById('teclado');
-    const vistas = document.querySelectorAll('.vista');
-    const menuBotones = document.querySelectorAll('.menu-boton');
 
-    let currentFocusTime = 2000; 
-    let keyDwellTimer = null;
+    let dwellTimer = null;
+    let currentFocusTime = 2000;
+    let focusMode = true; 
 
-    // --- MOTOR DE TIEMPO (DWELL) ---
-    function startDwellTimer(elemento, accion) {
-        elemento.classList.add('tecla-hovering');
-        keyDwellTimer = setTimeout(() => {
-            accion();
-            elemento.classList.remove('tecla-hovering');
-        }, currentFocusTime);
-    }
-
-    function clearDwellTimer(elemento) {
-        if (keyDwellTimer) { clearTimeout(keyDwellTimer); keyDwellTimer = null; }
-        if (elemento) elemento.classList.remove('tecla-hovering');
-    }
-
-    // --- 🚨 ALARMA SOS Y SONIDO ---
+    // --- 🚨 FUNCIÓN ALERTA PITIDO (RANGO SSS) ---
     function tocarPitido() {
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 6; i++) {
             setTimeout(() => {
                 const osc = audioCtx.createOscillator();
                 const gain = audioCtx.createGain();
+                osc.type = 'square';
                 osc.frequency.setValueAtTime(880, audioCtx.currentTime);
                 gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
                 osc.connect(gain); gain.connect(audioCtx.destination);
                 osc.start(); osc.stop(audioCtx.currentTime + 0.1);
-            }, i * 150);
+            }, i * 200);
         }
     }
 
-    // --- 🗣️ FUNCIÓN HABLAR (REFORZADA) ---
-    function hablar(texto) {
-        if ('speechSynthesis' in window && texto.trim() !== "") {
-            window.speechSynthesis.cancel();
-            const u = new SpeechSynthesisUtterance(texto);
-            u.lang = 'es-ES';
-            window.speechSynthesis.speak(u);
-        }
+    // --- MOTOR DE FOCO ---
+    function startDwellTimer(element, action) {
+        if (!focusMode) return;
+        element.classList.add('focus-active');
+        dwellTimer = setTimeout(() => {
+            action();
+            element.classList.remove('focus-active');
+        }, currentFocusTime);
     }
 
-    // --- LÓGICA SELECTOR VELOCIDAD [-] [+] ---
-    const velMenos = document.getElementById('vel-menos');
-    const velMas = document.getElementById('vel-mas');
-    const velValor = document.getElementById('vel-valor');
-    const velocidades = [500, 1000, 2000, 3000];
-    let indiceVel = 2;
-
-    function actualizarVelocidad() {
-        currentFocusTime = velocidades[indiceVel];
-        velValor.textContent = (currentFocusTime / 1000).toFixed(1) + 's';
-        tocarPitido();
+    function clearDwellTimer(element) {
+        if (dwellTimer) { clearTimeout(dwellTimer); dwellTimer = null; }
+        if (element) element.classList.remove('focus-active');
     }
 
-    if(velMenos && velMas) {
-        velMenos.onclick = () => { if(indiceVel > 0) { indiceVel--; actualizarVelocidad(); }};
-        velMas.onclick = () => { if(indiceVel < velocidades.length -1) { indiceVel++; actualizarVelocidad(); }};
-        [velMenos, velMas].forEach(btn => {
-            btn.onmouseenter = () => startDwellTimer(btn, () => btn.click());
-            btn.onmouseleave = () => clearDwellTimer(btn);
+    const hablar = (texto) => {
+        window.speechSynthesis.cancel();
+        const voz = new SpeechSynthesisUtterance(texto);
+        voz.lang = 'es-ES';
+        window.speechSynthesis.speak(voz);
+    };
+
+    // --- ASIGNAR FOCO A BOTONES DE CONTROL ---
+    const asignarFoco = (id, accion) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.onclick = () => { if (!focusMode) accion(); };
+        el.onmouseenter = () => startDwellTimer(el, accion);
+        el.onmouseleave = () => clearDwellTimer(el);
+    };
+
+    asignarFoco('btn-mas', () => { currentFocusTime += 500; speedValueSpan.textContent = (currentFocusTime/1000).toFixed(1) + 's'; });
+    asignarFoco('btn-menos', () => { currentFocusTime = Math.max(500, currentFocusTime - 500); speedValueSpan.textContent = (currentFocusTime/1000).toFixed(1) + 's'; });
+    asignarFoco('boton-tts', () => hablar(output.value));
+    asignarFoco('boton-limpiar', () => { output.value = ''; window.speechSynthesis.cancel(); });
+    
+    // El Checkbox es especial (cambia el modo)
+    const labelCheck = checkFocusTalk.parentElement;
+    labelCheck.onmouseenter = () => startDwellTimer(labelCheck, () => {
+        checkFocusTalk.checked = !checkFocusTalk.checked;
+        focusMode = checkFocusTalk.checked;
+    });
+    labelCheck.onmouseleave = () => clearDwellTimer(labelCheck);
+    checkFocusTalk.onchange = (e) => focusMode = e.target.checked;
+
+    // --- TECLADO (CON PITIDO Y BORRAR AJUSTADO) ---
+    const filas = ['Q W E R T Y U I O P', 'A S D F G H J K L Ñ', 'Z X C V B N M , . ?', 'ESPACIO BORRAR PITIDO'];
+    filas.forEach(f => {
+        const row = document.createElement('div'); row.className = 'tecla-row';
+        f.split(' ').forEach(t => {
+            const b = document.createElement('button'); b.textContent = t; b.className = 'tecla';
+            if (['ESPACIO','BORRAR','PITIDO'].includes(t)) b.classList.add('tecla-especial');
+            if (t === 'PITIDO') b.style.background = "#ff4444"; b.style.color = "white";
+
+            const acc = () => {
+                if (t === 'ESPACIO') output.value += ' ';
+                else if (t === 'BORRAR') output.value = output.value.slice(0, -1);
+                else if (t === 'PITIDO') tocarPitido();
+                else {
+                    output.value += t;
+                    if (t === '.') {
+                        const frases = output.value.split('.');
+                        const ultima = frases[frases.length - 2].trim();
+                        if (ultima) hablar(ultima);
+                    }
+                }
+            };
+            b.onclick = () => { if (!focusMode) acc(); };
+            b.onmouseenter = () => startDwellTimer(b, acc);
+            b.onmouseleave = () => clearDwellTimer(b);
+            row.appendChild(b);
         });
-    }
-
-    // --- BOTONES PRINCIPALES (HABLAR Y LIMPIAR) ---
-    botonTTS.onclick = () => hablar(outputPrincipal.value);
-    botonTTS.onmouseenter = () => startDwellTimer(botonTTS, () => hablar(outputPrincipal.value));
-    botonTTS.onmouseleave = () => clearDwellTimer(botonTTS);
-
-    botonLimpiar.onclick = () => { outputPrincipal.value = ''; outputPrincipal.focus(); };
-    botonLimpiar.onmouseenter = () => startDwellTimer(botonLimpiar, () => { outputPrincipal.value = ''; });
-    botonLimpiar.onmouseleave = () => clearDwellTimer(botonLimpiar);
-
-    // --- NAVEGACIÓN ---
-    function cambiarVista(id) {
-        vistas.forEach(v => { v.classList.add('oculto'); v.classList.remove('activa'); });
-        const destino = document.getElementById(`vista-${id}`);
-        if(destino) { destino.classList.remove('oculto'); destino.classList.add('activa'); }
-    }
-
-    menuBotones.forEach(btn => {
-        const destino = btn.getAttribute('data-vista');
-        btn.onmouseenter = () => startDwellTimer(btn, () => cambiarVista(destino));
-        btn.onmouseleave = () => clearDwellTimer(btn);
-        btn.onclick = () => cambiarVista(destino);
+        tecladoDiv.appendChild(row);
     });
 
-    // --- TECLADO ---
-    const layout = ['Q W E R T Y U I O P', 'A S D F G H J K L Ñ', 'Z X C V B N M , . ?', 'PITIDO ESPACIO BORRAR'];
-    function generarTeclado() {
-        tecladoDiv.innerHTML = '';
-        layout.forEach(fila => {
-            const div = document.createElement('div');
-            div.className = 'tecla-row';
-            fila.split(' ').forEach(t => {
-                const b = document.createElement('button');
-                b.textContent = t; b.className = 'tecla';
-                const acc = () => { 
-                     if(t === 'ESPACIO') {
-                        outputPrincipal.value += ' '; 
-                        // --- PITIDO DE CONFIRMACIÓN PARA ESPACIO ---
-                        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                        const osc = audioCtx.createOscillator();
-                        const gain = audioCtx.createGain();
-                        osc.frequency.setValueAtTime(660, audioCtx.currentTime); // Un tono distinto, más suave
-                        gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
-                        osc.connect(gain); gain.connect(audioCtx.destination);
-                        osc.start(); osc.stop(audioCtx.currentTime + 0.05); // Muy cortito: 0.05s
-                    } else if(t === 'BORRAR') {
-                        outputPrincipal.value = outputPrincipal.value.slice(0, -1); 
-                    } else if(t === 'PITIDO') {
-                        tocarPitido(); // Tu ráfaga SOS de siempre
-                    } else {
-                        outputPrincipal.value += t; 
-                    }
-                };
-                b.onclick = acc;
-                b.onmouseenter = () => startDwellTimer(b, acc);
-                b.onmouseleave = () => clearDwellTimer(b);
-                div.appendChild(b);
-            });
-            tecladoDiv.appendChild(div);
-        });
-    }
-
-    // --- SUB-BOTONES (FRASES) ---
-    document.querySelectorAll('.sub-boton').forEach(btn => {
-        const frase = btn.getAttribute('data-frase');
+    // --- NAVEGACIÓN Y SUB-BOTONES ---
+    document.querySelectorAll('.menu-boton').forEach(btn => {
         const acc = () => {
-            hablar(frase);
-            setTimeout(() => { cambiarVista('teclado'); outputPrincipal.value = ''; }, 2000);
+            document.querySelectorAll('.vista').forEach(v => v.classList.add('oculto'));
+            document.getElementById('vista-' + btn.dataset.vista).classList.remove('oculto');
         };
-        btn.onclick = acc;
+        btn.onclick = () => { if (!focusMode) acc(); };
         btn.onmouseenter = () => startDwellTimer(btn, acc);
         btn.onmouseleave = () => clearDwellTimer(btn);
     });
 
-    generarTeclado();
-    cambiarVista('teclado');
+    document.querySelectorAll('.sub-boton').forEach(btn => {
+        const acc = () => hablar(btn.dataset.frase);
+        btn.onclick = () => { if (!focusMode) acc(); };
+        btn.onmouseenter = () => startDwellTimer(btn, acc);
+        btn.onmouseleave = () => clearDwellTimer(btn);
+    });
 });

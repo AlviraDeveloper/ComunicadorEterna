@@ -1,193 +1,71 @@
-/* --- BASE GENERAL --- */
-body { 
+/* --- BASE GENERAL: RELAJANTE --- */
+* { box-sizing: border-box; }
+body, html { 
+    margin: 0; padding: 0; width: 100%; height: 100%; 
+    overflow: hidden; background-color: #e6f7ff; /* Azul pastel muy claro y suave */
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #e6f7ff; /* Azul pastel muy claro */
-    margin: 0; 
-    height: 100vh;
-    overflow: hidden; 
 }
 
-/* --- ESTRUCTURA DE DOS COLUMNAS (MAIN APP) --- */
-#main-container {
-    display: flex; /* Divide el contenedor principal en dos */
-    height: 100%;
-}
+#main-container { display: flex; width: 100vw; height: 100vh; padding: 10px; gap: 10px; }
 
-/* COLUMNA IZQUIERDA: MENÚS */
-#menu-columna {
-    width: 15%; /* Ocupa el 15% del ancho */
-    display: flex;
-    flex-direction: column;
-    padding: 10px 5px;
-    background-color: #007bff; /* Fondo azul para destacar el menú */
-    gap: 15px;
-}
-
+/* --- MENÚ IZQUIERDA: AZUL PROFUNDO --- */
+#menu-columna { width: 15%; display: flex; flex-direction: column; gap: 10px; }
 .menu-boton {
-    padding: 3vh 0;
-    font-size: 2.5vw;
-    font-weight: bold;
-    color: white;
-    background-color: #0056b3;
-    border: 2px solid #5d5dff;
-    border-radius: 15px;
-    cursor: pointer;
-    transition: background-color 0.1s;
+    flex: 1; font-size: 1.8vw; font-weight: bold; cursor: pointer;
+    border-radius: 15px; border: 3px solid #0056b3; background: white; color: #0056b3;
 }
-.menu-boton:hover { background-color: #003d80; }
+.menu-boton.focus-active { background: #0056b3 !important; color: white !important; transform: scale(1.05); }
 
-/* COLUMNA DERECHA: CONTENIDO (TECLADO/SUBMENÚS) */
-#content-columna {
-    width: 85%; /* Ocupa el 85% del ancho */
-    padding: 2vh 1vw;
-    display: flex;
-    flex-direction: column;
-    height: 100%; /* ¡CRÍTICO! OCUPA TODA LA ALTURA DISPONIBLE */
-    gap: 1.5vh;
+/* --- COLUMNA DERECHA: SUAVE --- */
+#contenido-derecha { width: 85%; display: flex; flex-direction: column; gap: 10px; }
+
+#output {
+    width: 100%; height: 15vh; font-size: 5vw; text-align: center; font-weight: bold;
+    border-radius: 20px; border: 4px solid #0056b3; padding: 15px; 
+    color: black; background: #fdfdfd; /* Blanco roto muy suave */
 }
 
-/* --- ESTILOS DE VISTAS (Comunes) --- */
-.vista {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5vh;
-    width: 100%;
-}
-.oculto {
-    display: none !important;
+/* --- PANEL SUPERIOR SSS --- */
+.panel-superior {
+    display: flex; justify-content: space-between; align-items: center;
+    background: #007bff; padding: 15px 30px; border-radius: 60px; color: white;
 }
 
-/* --- ESTILOS DE LA VISTA DEL TECLADO --- */
-#output { 
-    width: 99%; 
-    height: 35vh;
-    font-size: 5vw; 
-    resize: none; 
-    border: 3px solid #0056b3; 
-    border-radius: 15px; 
-    padding: 15px; 
-    box-sizing: border-box; 
-    background-color: white; 
+.controles-velocidad { display: flex; align-items: center; gap: 20px; }
+#focus-speed-value { font-weight: bold; font-size: 2vw; min-width: 80px; text-align: center; }
+
+/* BOTONES + y - GIGANTES */
+.btn-circular {
+    width: 70px; height: 70px; border-radius: 50%; border: 3px solid white; 
+    font-weight: bold; font-size: 2.5vw; cursor: pointer; background: #ffc107; color: black;
 }
 
-.funcional-contenedor { 
-    display: flex; 
-    gap: 20px; 
-    width: 100%; 
-    min-height: 2vh; /* Altura de los botones grandes */
-}
+.switch-foco { font-size: 1.5vw; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 15px; }
+.switch-foco input { transform: scale(2.5); }
 
-#boton-tts, #boton-limpiar { 
-    flex: 1; 
-    padding: 30px 10px; 
-    font-size: 40px; 
-    color: white; 
-    border: none; 
-    border-radius: 10px; 
-    font-weight: bold; 
-    height: 100%;
-    cursor: pointer; 
-}
-#boton-tts { background-color: #007bff; }
-#boton-tts:hover { background-color: #0056b3; }
-#boton-limpiar { background-color: #dc3545; }
-#boton-limpiar:hover { background-color: #bd2130; }
+/* HABLAR Y LIMPIAR GIGANTES */
+.botones-accion { display: flex; gap: 20px; }
+.btn-verde { background: #28a745; color: white; border: 3px solid white; padding: 15px 40px; border-radius: 20px; font-size: 1.8vw; font-weight: bold; cursor: pointer; }
+.btn-rojo { background: #dc3545; color: white; border: 3px solid white; padding: 15px 40px; border-radius: 20px; font-size: 1.8vw; font-weight: bold; cursor: pointer; }
 
-/* --- ESTILOS DEL TECLADO --- */
-#teclado {
-    width: 100%;
-    flex-grow: 1; /* Para que el teclado ocupe el espacio restante */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-.tecla-row { 
-    display: flex; 
-    width: 100%; 
-    flex-grow: 1; 
-    margin-bottom: 0.5vh; 
-}
+/* --- TECLADO RELAJANTE Y LEGIBLE --- */
+.vistas-contenedor { flex-grow: 1; background: #f8f9fa; /* Fondo grisáceo muy suave para el teclado */
+    border-radius: 25px; border: 4px solid #0056b3; padding: 15px; overflow: hidden; }
+.vista { width: 100%; height: 100%; }
+.oculto { display: none !important; }
+
+#teclado { display: flex; flex-direction: column; gap: 10px; height: 100%; }
+.tecla-row { display: flex; flex: 1; gap: 10px; }
 .tecla { 
-    flex: 1; 
-    padding: 0;
-    font-size: 4.5vw; 
-    margin: 0.5vh 0.2vw; 
-    background-color: #f8f9fa; 
-    border: 1px solid #ced4da; 
-    border-radius: 8px; 
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer; 
+    flex: 1; font-size: 2.5vw; font-weight: bold; cursor: pointer;
+    background: white; /* Teclas blancas para legibilidad */
+    border: 2px solid #ccc; border-radius: 15px;
+    display: flex; align-items: center; justify-content: center;
+    color: #000 !important; /* LETRAS NEGRAS SIEMPRE */
 }
-.tecla:hover { background-color: #e9ecef; }
-.tecla-especial { background-color: #8ac6ff; }
-.tecla-especial:hover { background-color: #66b3ff; }
+.tecla.focus-active { background: #ffeb3b !important; border: 5px solid #007bff; transform: scale(1.03); }
 
-/* Ajustes de teclas especiales (igual que en la versión sencilla) */
-.tecla-row:last-child .tecla:nth-child(1) { flex: 0.1; } /* Pitido (asumo que es el primero) */
-.tecla-row:last-child .tecla:nth-child(2) { flex: 6; } /* ESPACIO */
-.tecla-row:last-child .tecla:nth-child(3) { flex: 1.5; } /* Borrar */
-
-/* --- ESTILOS DE SUBMENÚS (Cuadrícula) --- */
-
-.vista-titulo {
-    font-size: 5vw;
-    color: #dc3545; /* Rojo de alarma */
-    margin-bottom: 2vh;
-    text-align: center;
-}
-
-.menu-cuadricula {
-    display: grid;
-    /* 3 columnas de igual tamaño */
-    grid-template-columns: repeat(3, 1fr); 
-    /* Las filas se ajustan solas (auto) */
-    grid-gap: 20px; 
-    flex-grow: 1; 
-}
-
-.sub-boton {
-    padding: 30px;
-    font-size: 3.5vw;
-    font-weight: bold;
-    border-radius: 15px;
-    border: none;
-    cursor: pointer;
-    background-color: #8ac6ff; /* Amarillo para destacar las opciones */
-    color: #343a40;
-    transition: background-color 0.1s;
-}
-.sub-boton:hover {
-    background-color: #66b3ff;
-}
-
-/* --- ESTILO COMPARTIDO PARA LAS ÁREAS DE TEXTO DE SUBMENÚS --- */
-.output-sub { 
-    width: 99%; 
-    height: 18vh;
-    font-size: 6vw; 
-    resize: none; 
-    border: 3px solid #0056b3; 
-    border-radius: 15px; 
-    padding: 15px; 
-    box-sizing: border-box; 
-    background-color: white; 
-}
-/* APLICAMOS LOS ESTILOS DE TTS/LIMPIAR A LOS NUEVOS BOTONES */
-#boton-tts-sos, #boton-limpiar-sos { 
-    flex: 1; 
-    padding: 30px 10px; 
-    font-size: 40px; 
-    color: white; 
-    border: none; 
-    border-radius: 10px; 
-    font-weight: bold; 
-    height: 100%;
-    cursor: pointer; 
-}
-#boton-tts-sos { background-color: #007bff; }
-#boton-tts-sos:hover { background-color: #0056b3; }
-#boton-limpiar-sos { background-color: #dc3545; }
-#boton-limpiar-sos:hover { background-color: #bd2130; }
+/* ESPECIALES ÚLTIMA FILA CON SUS COLORES */
+.tecla-row:last-child .tecla:nth-child(1) { flex: 4; background: #a6d5ff; border-color: #0056b3; } /* ESPACIO AZUL CLARO */
+.tecla-row:last-child .tecla:nth-child(2) { flex: 2; background: #ffd966; border-color: #e0a800; } /* BORRAR AMARILLO */
+.tecla-row:last-child .tecla:nth-child(3) { flex: 2; background: #ff6666; color: white !important; border-color: #bd2130; } /* PITIDO ROJO */

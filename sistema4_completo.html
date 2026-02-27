@@ -3,41 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🗣️ Eterna Keyboard PRO 🗣️</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🗣️</text></svg>">
+    <title>🗣️ Eterna Sistema 4 - RANGO SSS 🗣️</title>
     <link rel="stylesheet" href="style.css"> 
 </head>
 <body>
-    <div id="main-container">
-        <div id="menu-columna">
-            <button class="menu-boton" data-vista="teclado">⌨️ TECLADO</button>
-            <button class="menu-boton" data-vista="sos">🆘 SOS</button>
-            <button class="menu-boton" data-vista="quiero">🏃 QUIERO</button>
-            <button class="menu-boton" data-vista="necesito">📦 NECESITO</button>
-            <button class="menu-boton" data-vista="dolor">🤕 ME DUELE</button>
-            <div id="selector-velocidad" style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-top: 20px; background: rgba(0,0,0,0.15); padding: 10px; border-radius: 12px; border: 2px solid #0056b3;">
-                <button id="vel-menos" class="tecla" style="width: 60px; height: 60px; cursor: pointer; background: #fff; color: #0056b3; font-weight: bold; font-size: 2rem;">-</button>
-                <div style="display: flex; flex-direction: column; align-items: center;">
-                <span style="font-size: 0.8rem; color: #0056b3; font-weight: bold;">ESPERA</span>
-                <span id="vel-valor" style="font-weight: bold; font-size: 1.5rem; color: #0056b3; min-width: 70px; text-align: center;">2.0s</span>
+
+<div id="main-container">
+    <div id="menu-columna">
+        <button class="menu-boton" data-vista="teclado">⌨️ TECLADO</button>
+        <button class="menu-boton" data-vista="sos">🆘 SOS</button>
+        <button class="menu-boton" data-vista="quiero">🏃 QUIERO</button>
+        <button class="menu-boton" data-vista="necesito">📦 NECESITO</button>
+        <button class="menu-boton" data-vista="dolor">🤕 ME DUELE</button>
+    </div>
+
+    <div id="contenido-derecha">
+        <textarea id="output" placeholder="Escribe aquí..."></textarea>
+
+        <div class="panel-superior">
+            <div class="controles-velocidad">
+                <button id="btn-menos" class="btn-circular">-</button>
+                <span id="focus-speed-value">2.0s</span>
+                <button id="btn-mas" class="btn-circular">+</button>
             </div>
-            <button id="vel-mas" class="tecla" style="width: 60px; height: 60px; cursor: pointer; background: #fff; color: #0056b3; font-weight: bold; font-size: 2rem;">+</button>
-        </div>
+            
+            <label class="switch-foco">
+                Modo Foco <input type="checkbox" id="check-focus-talk" checked>
+            </label>
+
+            <div class="botones-accion">
+                <button id="boton-tts" class="btn-verde">🔊 HABLAR</button>
+                <button id="boton-limpiar" class="btn-rojo">🗑️ LIMPIAR</button>
+            </div>
         </div>
 
-        <div id="content-columna">
-            
+        <div class="vistas-contenedor">
             <div id="vista-teclado" class="vista">
-                <textarea id="output" placeholder="Escribe aquí con el teclado virtual"></textarea>
-                <div class="funcional-contenedor">
-                    <button id="boton-tts">🔊 HABLAR LO ESCRITO 🔊</button>
-                    <button id="boton-limpiar">🗑️ BORRAR TODO 🗑️</button>
-                </div>
                 <div id="teclado"></div>
             </div>
-            
+
             <div id="vista-sos" class="vista oculto">
-                <h1 class="vista-titulo">🚨 ¡AYUDA, ME SIENTO MAL!</h1>
+                <h1 class="vista-titulo color-sos">🚨 ¡AYUDA, ME SIENTO MAL!</h1>
                 <div class="menu-cuadricula">
                     <button class="sub-boton" data-frase="Ayuda, el cojín / almohada está mal.">Cojín/Posición</button>
                     <button class="sub-boton" data-frase="Ayuda, necesito que me cambies de posición.">Necesito Moverme</button>
@@ -50,63 +56,55 @@
                     <button class="sub-boton" data-frase="Demasiada luz o ruido, me molesta.">Luz/Ruido</button>
                 </div>
             </div>
-            
+
             <div id="vista-quiero" class="vista oculto">
-    
-                <h1 class="vista-titulo" style="color: #007bff;">🏃 ¡QUIERO HACER ESTO!</h1>
+                <h1 class="vista-titulo color-quiero">🏃 ¡QUIERO HACER ESTO!</h1>
                 <div class="menu-cuadricula">
                     <button class="sub-boton" data-frase="Quiero du-char-me o que me ayuden con el aseo.">Ducha/Aseo</button>
                     <button class="sub-boton" data-frase="Quiero ir al sofá ahora.">Sofá</button>
                     <button class="sub-boton" data-frase="Quiero ir al balcón o al exterior un rato.">Balcón/Exterior</button>
-                    
                     <button class="sub-boton" data-frase="Quiero ver la televisión ahora.">TV</button>
                     <button class="sub-boton" data-frase="Quiero escuchar música.">Música</button>
                     <button class="sub-boton" data-frase="Quiero que me leas algo o leer un libro.">Leer</button>
-                    
                     <button class="sub-boton" data-frase="Quiero pañuelos por favor.">Pañuelos</button>
                     <button class="sub-boton" data-frase="Quiero que me ayudes a escribir algo.">Escribir</button>
                     <button class="sub-boton" data-frase="Quiero recibir una visita o hacer una llamada.">Visita/Llamada</button>
                 </div>
             </div>
+
             <div id="vista-necesito" class="vista oculto">
-    
-                <h1 class="vista-titulo" style="color: #009933;">📦 ¡NECESITO ALGO!</h1>
+                <h1 class="vista-titulo color-necesito">📦 ¡NECESITO ALGO!</h1>
                 <div class="menu-cuadricula">
                     <button class="sub-boton" data-frase="Necesito beber algo, por favor.">Bebida</button>
                     <button class="sub-boton" data-frase="Necesito comer algo ahora.">Comer</button>
                     <button class="sub-boton" data-frase="Necesito un cambio de pañal.">Pañal</button>
-                    
                     <button class="sub-boton" data-frase="Necesito mis medicinas o pastillas.">Medicinas</button>
                     <button class="sub-boton" data-frase="Necesito cambiar mi ropa o sábanas, están sucias">Limpieza (Ropa)</button>
                     <button class="sub-boton" data-frase="Necesito abrir o cerrar la ventana.">Ventana/Aire</button>
-                    
                     <button class="sub-boton" data-frase="Se me ha caído algo al suelo.">Se ha caído</button>
                     <button class="sub-boton" data-frase="Necesito mi teléfono.">Teléfono</button>
                     <button class="sub-boton" data-frase="Necesito que me des un masaje.">Masaje</button>
                 </div>
             </div>
+
             <div id="vista-dolor" class="vista oculto">
-    
-                <h1 class="vista-titulo" style="color: #dc3545;">🤕 ¡ME DUELE AQUÍ!</h1>
+                <h1 class="vista-titulo color-dolor">🤕 ¡ME DUELE AQUÍ!</h1>
                 <div class="menu-cuadricula">
                     <button class="sub-boton" data-frase="Me duele mucho la cabeza.">Cabeza</button>
                     <button class="sub-boton" data-frase="Me duele mucho el cuello.">Cuello</button>
                     <button class="sub-boton" data-frase="Me duele mucho la espalda.">Espalda</button>
-                    
                     <button class="sub-boton" data-frase="Me duele el culo o la zona del pañal.">Culo</button>
                     <button class="sub-boton" data-frase="Me duele la pierna derecha.">Pierna Derecha</button>
                     <button class="sub-boton" data-frase="Me duele la pierna izquierda.">Pierna Izquierda</button>
-                    
                     <button class="sub-boton" data-frase="Me duele el brazo derecho.">Brazo Derecho</button>
                     <button class="sub-boton" data-frase="Me duele el brazo izquierdo.">Brazo Izquierdo</button>
                     <button class="sub-boton" data-frase="Me duele mucho la barriga o el estómago.">Barriga</button>
                 </div>
             </div>
-
         </div>
     </div>
-    
-    <script src="script.js"></script> 
-   
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>

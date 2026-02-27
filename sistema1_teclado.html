@@ -6,140 +6,101 @@
     <title>Eterna - Sistema de Habla por Teclado</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⌨️</text></svg>">
 
-    <!-- 💖 ESTILOS INTEGRADOS AUTOCONTENIDOS 💖 -->
     <style>
-        /* Base y Estructura */
+        /* 💙 ESTRUCTURA REFACTORIZADA RANGO SSS 💙 */
         body {
-            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f7ff; /* Azul pastel muy claro */
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            background-color: #f0f7ff;
             color: #333d47;
-            padding: 0;
             margin: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
-            height: 100vh; /* Ocupa toda la altura de la ventana */
+            height: 100vh; /* Ajuste perfecto al alto de pantalla */
             box-sizing: border-box; 
-            padding: 20px; /* Padding general */
+            padding: 20px;
+            overflow: hidden; /* Evita scrolls innecesarios */
         }
 
-        /* Cabecera */
         header {
             width: 100%;
             max-width: 1000px;
             text-align: center;
-            padding: 0 0 10px 0;
             position: relative; 
         }
 
-        header h1 {
-            font-size: 2.2em;
-            color: #007bff;
-            margin: 0;
-        }
-
-        header p {
-            color: #555;
-            font-size: 1.1em;
-            margin-top: 5px;
-            margin-bottom: 20px;
-        }
+        header h1 { font-size: 2.2em; color: #007bff; margin: 0; }
+        header p { color: #555; font-size: 1.1em; margin: 5px 0 15px 0; }
         
-        /* Botón de Regreso (Esquina Superior Izquierda) */
         .btn-atras {
             position: absolute;
-            top: 0;
-            left: 0;
+            top: 0; left: 0;
             text-decoration: none;
             font-size: 2.5em; 
             padding: 5px;
         }
 
-        /* Área de Texto Principal (CRÍTICO: Ocupa el máximo espacio vertical) */
+        /* Contenedor principal para el ajuste 100vh sugerido */
+        #contenedor-principal {
+            width: 100%;
+            max-width: 1000px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
         #campoDeTexto {
             width: 100%; 
-            max-width: 1000px; 
-            flex-grow: 1; /* Esto hace que ocupe todo el espacio vertical disponible */
-            min-height: 200px; 
-            
-            font-size: 4vh; 
+            flex-grow: 1; 
+            min-height: 150px; 
+            font-size: 5vh; /* Un poco más grande para mejor visibilidad */
             padding: 20px;
-            
             border: 5px solid #007bff; 
             border-radius: 15px;
             box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
             resize: none; 
             margin-bottom: 20px; 
-            transition: border-color 0.3s;
             box-sizing: border-box;
+            transition: border-color 0.3s;
         }
         
-        /* ESTILO DEL INPUT ENFOCADO */
         #campoDeTexto:focus {
-            border-color: #28a745; /* Verde claro al enfocar */
+            border-color: #28a745;
             outline: none;
         }
 
-        /* Botón de Volver al Menú Principal (AZUL SÓLIDO) */
         .btn-volver {
             display: block; 
             width: 100%;
-            max-width: 1000px;
             text-align: center;
             text-decoration: none;
             color: white;
-            background-color: #007bff; /* AZUL DE MARCA */
-            padding: 15px 30px;
+            background-color: #007bff;
+            padding: 15px 0;
             border-radius: 8px;
             font-weight: bold;
             font-size: 1.2em;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-            transition: background-color 0.2s, transform 0.2s;
-            margin-bottom: 20px; 
-        }
-        .btn-volver:hover {
-            background-color: #0056b3; /* Azul oscuro al pasar el ratón */
-            transform: translateY(-2px);
-        }
-
-        /* Responsive para asegurar que se vea bien en móviles */
-        @media (max-width: 768px) {
-            header h1 {
-                font-size: 1.6em;
-            }
-            #campoDeTexto {
-                font-size: 3.5vh;
-            }
-            .btn-atras {
-                font-size: 2em;
-            }
+            margin-bottom: 10px;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <!-- BOTÓN DE REGRESO EN LA ESQUINA SUPERIOR -->
-        <a href="index.html" class="btn-atras" aria-label="Volver al menú principal">⬅️</a>
+        <a href="index.html" class="btn-atras">⬅️</a>
         <h1>Sistema 1: Escritura Rápida</h1>
-        <p>Escribe y pulsa **Enter** o espera 3 segundos para que el texto se lea automáticamente.</p>
+        <p>Se leerá automáticamente al poner un **punto (.)** o pulsar **Enter**.</p>
     </header>
 
-    <!-- ÁREA DE TEXTO QUE CRECE PARA OCUPAR ESPACIO -->
-    <textarea id="campoDeTexto" placeholder="Comienza a escribir aquí con tu teclado físico..." autofocus></textarea>
-
-    <!-- BOTÓN DE VOLVER AL MENÚ PRINCIPAL (Debajo del texto) -->
-    <a href="index.html" class="btn-volver">Volver al Menú Principal</a>
+    <div id="contenedor-principal">
+        <textarea id="campoDeTexto" placeholder="Escribe aquí... El sistema leerá al finalizar con punto (.)" autofocus></textarea>
+        <a href="index.html" class="btn-volver">Volver al Menú Principal</a>
+    </div>
 
     <script>
         const input = document.getElementById('campoDeTexto');
-        let timerId;
 
-        /**
-         * Cancela la voz actual y habla el texto proporcionado.
-         * Se asegura de que la voz sea en español.
-         * @param {string} texto - La frase a reproducir.
-         */
         function hablarTexto(texto) {
             window.speechSynthesis.cancel(); 
             if (texto.trim() !== "") {
@@ -149,55 +110,33 @@
             }
         }
 
-        /**
-         * Lógica principal al pulsar una tecla.
-         * Maneja el ENTER y reinicia el temporizador de 3 segundos.
-         */
-        input.addEventListener('keyup', function(event) {
-            clearTimeout(timerId);
-
-            // --- 1. Manejo de la tecla ENTER (Prioridad Alta) ---
-            if (event.key === 'Enter') {
-                const texto = input.value.trim();
-                
-                // Si hay texto, lo habla y lo limpia
-                if (texto) {
-                    // Limpiamos después de capturar el texto
-                    input.value = ''; 
-                    hablarTexto(texto);
-                } else {
-                    // Si solo pulsó Enter sin texto, solo quitamos el salto de línea residual
-                    input.value = '';
-                }
-                return; 
-            }
+        input.addEventListener('input', function(event) {
+            const valor = input.value;
             
-            // --- 2. Temporizador de 3 segundos para hablar automáticamente ---
-            // Solo si hay texto escrito
-            if (input.value.trim().length > 0) {
-                timerId = setTimeout(() => {
-                    const texto = input.value.trim();
-                    input.value = ''; // Limpiar después de la lectura
+            // --- BICTORIA TÉCNICA: Lectura al detectar PUNTO ---
+            if (valor.endsWith('.')) {
+                const textoParaLeer = valor.trim();
+                if (textoParaLeer.length > 1) { // Evita leer solo un punto
+                    hablarTexto(textoParaLeer);
+                    input.value = ''; // Limpiamos para la siguiente frase
+                }
+            }
+        });
+
+        input.addEventListener('keydown', function(event) {
+            // --- Manejo de la tecla ENTER ---
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Evita el salto de línea en el textarea
+                const texto = input.value.trim();
+                if (texto) {
                     hablarTexto(texto);
-                }, 3000); // 3000 milisegundos = 3 segundos
-            }
-        });
-        
-        // CRÍTICO: Listener para el cambio de foco (BLUR).
-        // Si el usuario quita el foco (clica fuera o cambia de app) se lee automáticamente.
-        input.addEventListener('blur', function() {
-            clearTimeout(timerId); // Cancelamos el temporizador
-            const texto = input.value.trim();
-            if (texto.length > 0) {
-                input.value = ''; // Limpiar después de la lectura
-                hablarTexto(texto);
+                    input.value = ''; 
+                }
             }
         });
 
-        // Enfocamos automáticamente el campo al cargar la página.
+        // Enfocamos automáticamente
         input.focus();
-
     </script>
-
 </body>
 </html>
