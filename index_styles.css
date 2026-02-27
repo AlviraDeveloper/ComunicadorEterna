@@ -175,28 +175,34 @@ hr {
 /* ------------------------------------- */
 #sistemas-botones {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); 
-    gap: 25px;
+    /* Cambiamos 350px por 280px para que quepa en móviles pequeños */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
     margin-top: 30px;
+    width: 100%; /* Aseguramos que no se estire más de la cuenta */
 }
-
 #sistemas-botones button {
-    padding: 30px;
-    font-size: 1.1em; 
-    border-radius: 15px; 
+    /* --- Geometría y Responsive --- */
+    width: 100%;
+    box-sizing: border-box; /* Fundamental para que el padding no rompa el ancho */
+    padding: 25px; /* Un pelín menos que antes para que respire en el móvil */
+    min-height: 140px;
+    /* --- Apariencia y Estilo --- */
+    font-size: 1.1em;
+    border-radius: 15px;
     cursor: pointer;
-    border: 1px solid #cceeff; 
-    background-color: #ffffff; 
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); 
-    transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1); 
+    border: 1px solid #cceeff;
+    background-color: #ffffff;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
     text-align: left;
-    /* Usamos flex para alinear el icono con el texto */
+    /* --- Disposición Interna --- */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-height: 140px; 
-    position: relative; 
+    position: relative;
     overflow: hidden;
+    /* --- Animación --- */
+    transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 /* Estilo para los iconos de los botones: ¡AQUÍ ESTÁ EL CAMBIO DE TAMAÑO! */
