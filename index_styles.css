@@ -14,8 +14,9 @@ body {
 /* Ocultar elementos para SEO/Accesibilidad */
 .visually-hidden {
     position: absolute;
-    width: 1px;
-    height: 1px;
+    width: 5px;
+    height: 5px;
+    height: 5px;
     margin: -1px;
     padding: 0;
     overflow: hidden;
@@ -28,7 +29,7 @@ body {
 main {
     max-width: 100%; /* Un poco más ancho para más espacio */
     margin: 0 auto;
-    padding: 15px 20px 40px 20px; /* Más padding en general */
+    padding: 20px 30px 60px 30px; /* Más padding en general */
 }
 
 /* ------------------------------------- */
@@ -175,11 +176,12 @@ hr {
 /* ------------------------------------- */
 #sistemas-botones {
     display: grid;
-    /* Cambiamos 350px por 280px para que quepa en móviles pequeños */
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    /* Esto obliga a que siempre se repartan el espacio de forma fluida */
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 20px;
-    margin-top: 30px;
-    width: 100%; /* Aseguramos que no se estire más de la cuenta */
+    width: 100%;
+    max-width: 1200px; /* Evita que en pantallas de 2000px se estiren demasiado */
+    margin: 0 auto;
 }
 #sistemas-botones button {
     /* --- Geometría y Responsive --- */
