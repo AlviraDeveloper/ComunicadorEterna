@@ -26,9 +26,9 @@ body {
 
 /* Contenedor principal para centrar el contenido */
 main {
-    max-width: 1000px; /* Un poco más ancho para más espacio */
+    max-width: 100%; /* Un poco más ancho para más espacio */
     margin: 0 auto;
-    padding: 20px 30px 60px 30px; /* Más padding en general */
+    padding: 15px 20px 40px 20px; /* Más padding en general */
 }
 
 /* ------------------------------------- */
@@ -38,8 +38,8 @@ main {
 /* Header general (Contenedor superior) */
 header {
     background: linear-gradient(135deg, #ffffff, #e6f7ff); /* Degradado suave */
-    padding-top: 10px !important; 
-    padding-bottom: 10px !important;
+    padding-top: 1px !important; 
+    padding-bottom: 1px !important;
     border-bottom: 5px solid #0056b3; /* Línea azul oscuro fuerte */
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     text-align: center;
