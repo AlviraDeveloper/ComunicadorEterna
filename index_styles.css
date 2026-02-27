@@ -323,7 +323,12 @@ hr {
         grid-template-columns: 1fr; 
     }
 }
-
+@media (max-width: 600px) {
+    .boton-version {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
 @media (max-width: 480px) {
     nav {
         flex-wrap: wrap; 
