@@ -76,7 +76,7 @@ header {
     align-items: center;
 }
 .logo-area img {
-    max-width: 250px !important; /* Un pelín más pequeño para ganar espacio vertical */
+    max-width: 150px !important; /* Un pelín más pequeño para ganar espacio vertical */
 }
 
 /* 2. NUEVO CONTENEDOR para TÍTULO y NAV (Ocupa el espacio restante) */
@@ -106,7 +106,7 @@ header {
 nav {
     display: flex; 
     gap: 12px; 
-    padding: 12px 20px;
+    padding: 8px 15px;
     background-color: #007bff; 
     border-radius: 20px; 
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); 
