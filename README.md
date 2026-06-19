@@ -11,11 +11,11 @@ Optimización de velocidad: Ajustes en tiempo real para adaptarse al ritmo del u
 
 Diseño centrado en el usuario: Interfaz intuitiva y fácil de gestionar.
 
-Versatilidad de entrada: Incorpora distintos teclados con diversas funcionalidades para adaptarse a diferentes capacidades o limitaciones motrices.
+Versatilidad: Incorpora distintos teclados con diversas funcionalidades para adaptarse a diferentes capacidades o limitaciones.
 
-Ligereza técnica: Puede descargarse y ejecutarse como web local en cualquier ordenador. Al ser un sistema optimizado con mínimos recursos, funciona perfectamente incluso en equipos antiguos sin sufrir lag o bloqueos.
+Ligereza técnica: Se puede descargar y ejecutar como aplicación local en cualquier ordenador. Al ser un sistema muy liviano, puede operar incluso en equipos antiguos sin sufrir lag ni bloqueos.
 
-Requisito de conexión: Aunque es un sistema liviano, requiere conexión a internet para su funcionamiento.
+Requisito: Requiere conexión a internet para su funcionamiento.
 
 🤝 Créditos
-Este proyecto es una creación colaborativa realizada por Alejandro Alvira junto a Gemini, trabajando en sinergia para desarrollar el espacio completo de la aplicación.
+Este proyecto ha sido realizado por Alejandro Alvira en conjunto con Gemini, trabajando en sinergia para desarrollar toda la estructura y funcionalidad del espacio.
